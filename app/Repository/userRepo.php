@@ -8,9 +8,11 @@ use Illuminate\Support\Str;
 class userRepo
 {
     private $query;
+    private $general;
 
     public function __construct()
     {
+        $this->general = substr(base_convert(sha1(uniqid(mt_rand())), 20, 36), 0, 100);
         $this->query = User::query();
     }
 
@@ -21,10 +23,13 @@ class userRepo
 
     public function create($data)
     {
+//        if (! is_null($data['id_tele'])) {
+//            $check = Str::after($data['id_tele'], '@');
+//        }
         return $this->query->create([
-            'uuid_name' => $data['uuid_name'],
-            'name' => Str::after($data['uuid_name'], '@'),
-            'id_tele' => $data['id_tele'] ?? substr(base_convert(sha1(uniqid(mt_rand())), 20, 36), 0, 100),
+            'uuid_name' => $data['uuid_name'] ?? $this->general,
+            'id_tele' => $data['id_tele'] ?? null,
+            'name' => Str::after($data['id_tele'], '@') ?? 'null',
             'phone' => $data['phone'] ?? null,
             'remember_token' => Str::uuid(Str::random(15))
         ]);
@@ -50,6 +55,11 @@ class userRepo
         return $this->query->where('id', $id)->update([
             'wallet' => $data['wallet'],
         ]);
+    }
+
+    public function users_state()
+    {
+        return User::query()->withCount(['t_balance', 't_energy', 'trophy', 'multi_touche'])->get();
     }
 
 

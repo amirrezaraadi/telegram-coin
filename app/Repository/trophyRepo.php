@@ -22,6 +22,7 @@ class trophyRepo
     {
         return $this->query->create([
             'title' => $data['title'],
+            'player_id' => 1,
         ]);
     }
 
@@ -34,6 +35,7 @@ class trophyRepo
     {
         return $this->query->where('id', $id)->update([
             'title' => $data['title'],
+            'player_id' => 1,
         ]);
     }
 

@@ -51,4 +51,10 @@ class UserController extends Controller
         $this->userRepo->add_wallet($request->only('wallet') , $user->id);
         return response()->json(['message' => 'change add wallet ', 'status' => 'success'], 200);
     }
+
+    public function users_state_chart()
+    {
+        $users =  $this->userRepo->users_state();
+        return response(['users' =>$users]);
+    }
 }
