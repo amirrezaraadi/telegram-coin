@@ -44,4 +44,11 @@ class TrophyController extends Controller
         $this->trophyRepo->delete($id->id);
         return response()->json(['message' => 'success create trophy ', 'status' => 'success'], 200);
     }
+
+    public function default($id): \Illuminate\Http\JsonResponse
+    {
+        $trophyId = $this->trophyRepo->getFindId($id);
+        $this->trophyRepo->change($trophyId);
+        return response()->json(['message' => 'change state create trophy ', 'status' => 'success'], 200);
+    }
 }

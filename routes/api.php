@@ -15,6 +15,6 @@ Route::prefix('manager')->name('manager')->group(function () {
     Route::apiResource('energy-up' , \App\Http\Controllers\EnergyUpController::class);
 });
 Route::prefix('status')->name('status')->group(function () {
-    Route::put('/trophies/' , [\App\Http\Controllers\TrophyController::class , 'default'])->name('default');
+    Route::put('/trophies/{trophy}' , [\App\Http\Controllers\TrophyController::class , 'default'])->name('default');
 });
 

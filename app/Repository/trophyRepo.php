@@ -6,7 +6,8 @@ use App\Models\Manager\Trophy;
 
 class trophyRepo
 {
-    public $query ;
+    public $query;
+
     public function __construct()
     {
         $this->query = Trophy::query();
@@ -14,13 +15,13 @@ class trophyRepo
 
     public function index()
     {
-        return $this->query->paginate();
+        return $this->query->with('soft_delete')->paginate();
     }
 
     public function create($data)
     {
         return $this->query->create([
-            'title'  => $data['title'],
+            'title' => $data['title'],
         ]);
     }
 
@@ -29,15 +30,23 @@ class trophyRepo
         return $this->query->findOrFail($id);
     }
 
-    public function upadte($data , $id)
+    public function upadte($data, $id)
     {
-        return $this->query->where('id' , $id)->update([
-            'title'  => $data['title'],
+        return $this->query->where('id', $id)->update([
+            'title' => $data['title'],
         ]);
     }
 
     public function delete($id)
     {
-        return $this->query->where('id' , $id)->delete();
+        return $this->query->where('id', $id)->delete();
+    }
+
+    public function change($id)
+    {
+        if ($id->is_default === 0)
+            return $this->query->where('id', $id->id)->update(['is_default' => 1]);
+        if ($id->is_default=== 1)
+            return $this->query->where('id', $id->id)->update(['is_default' => 0]);
     }
 }
