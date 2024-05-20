@@ -22,7 +22,10 @@ class UpdateEnergyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['nullable', 'string', 'min:2', 'max:200'],
+            'size' => ['nullable', 'string', 'max:200'],
+            'unit' => ['nullable', 'string', 'max:200'],
+            'amount' => ['nullable', 'string', 'max:200'],
         ];
     }
 }

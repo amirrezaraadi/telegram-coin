@@ -4,10 +4,11 @@ namespace App\Models\Manager;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Energy extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
 
     protected $fillable = [
@@ -16,6 +17,7 @@ class Energy extends Model
         'unit',
         'amount',
         'is_default',
+        'player_id'
     ];
 
     protected $casts = [

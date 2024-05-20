@@ -9,15 +9,24 @@ use App\Repository\energyRepo;
 
 class EnergyController extends Controller
 {
-    public function __construct(public energyRepo $energyRepo){}
+    public function __construct(public energyRepo $energyRepo)
+    {
+    }
 
     public function index()
     {
         return $this->energyRepo->index();
     }
+
     public function store(StoreEnergyRequest $request)
     {
-        return response()->json(['message' => 'create energy suuccess' , 'status' => 'success'] , 200) ;
+        $this->energyRepo->create($request->only([
+            'title',
+            'size',
+            'unit',
+            'amount'
+        ]));
+        return response()->json(['message' => 'create energy success', 'status' => 'success'], 200);
     }
 
 
@@ -26,23 +35,22 @@ class EnergyController extends Controller
         return $this->energyRepo->getFindId($energy);
     }
 
-
-    public function edit( $energy)
+    public function update(UpdateEnergyRequest $request, $energy)
     {
-        return $this->energyRepo->getFindId($energy);
+        $this->energyRepo->update($request->only([
+            'title',
+            'size',
+            'unit',
+            'amount'
+        ]), $energy);
+        return response()->json(['message' => 'update energy success', 'status' => 'success'], 200);
     }
 
 
-    public function update(UpdateEnergyRequest $request,  $energy)
+    public function destroy($energy)
     {
-        $this->energyRepo->update($request , $energy);
-        return response()->json(['message' => 'update energy success' , 'status' => 'success'] , 200) ;
-    }
-
-
-    public function destroy( $energy)
-    {
-        $this->energyRepo->delete($energy);
-      return response()->json(['message' => 'delete energy success' , 'status' => 'success'] , 200) ;
+        $id = $this->energyRepo->getFindId($energy);
+        $this->energyRepo->delete($id->id);
+        return response()->json(['message' => 'delete energy success', 'status' => 'success'], 200);
     }
 }

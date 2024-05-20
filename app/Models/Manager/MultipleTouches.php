@@ -4,10 +4,11 @@ namespace App\Models\Manager;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MultipleTouches extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
 
     protected $fillable = [

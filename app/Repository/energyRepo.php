@@ -26,6 +26,7 @@ class energyRepo
             'unit' => $data['unit'],
             'amount' => $data['amount'],
             'is_default' => 0,
+            'player_id' => 1
         ]);
     }
 
@@ -43,6 +44,7 @@ class energyRepo
             'unit' => $data['unit'] ?? $energyId->unit,
             'amount' => $data['amount'] ?? $energyId->amount,
             'is_default' => $data['is_default'] ?? $energyId->is_default,
+            'player_id' => 1
         ]);
     }
     public function delete($id)
