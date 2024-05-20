@@ -16,6 +16,7 @@ class RegisterController extends Controller
         if(is_null($user)) {
            $save =  resolve(userRepo::class)->create($request);
            $save->t_balance()->create(['amount'=>0]);
+
            dd($save);
         }
 //        $user->with
