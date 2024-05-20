@@ -11,7 +11,7 @@ class StoreMultipleTouchesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreMultipleTouchesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required' , 'min:1' , 'max:250'],
+            'unit' => ['required' , 'min:1' , 'max:250'],
+            'amount' => ['required' , 'min:1' , 'max:250'],
         ];
     }
 }

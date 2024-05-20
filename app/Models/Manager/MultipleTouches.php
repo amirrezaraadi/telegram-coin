@@ -16,6 +16,7 @@ class MultipleTouches extends Model
         'unit',
         'amount',
         'is_default',
+        'player_id'
     ];
     protected $casts = [
         'publish_at' => 'timestamp'

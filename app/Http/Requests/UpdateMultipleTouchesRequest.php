@@ -11,7 +11,7 @@ class UpdateMultipleTouchesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true ;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateMultipleTouchesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['nullable' , 'min:1' , 'max:250'],
+            'unit' => ['nullable' , 'min:1' , 'max:250'],
+            'amount' => ['nullable' , 'min:1' , 'max:250'],
         ];
     }
 }
