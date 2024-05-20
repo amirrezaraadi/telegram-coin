@@ -4,6 +4,7 @@ use App\Http\Controllers\EnergyController;
 use App\Http\Controllers\EnergyUpController;
 use App\Http\Controllers\Manager\UserController;
 use App\Http\Controllers\MultipleTouchesController;
+use App\Http\Controllers\TBalanceController;
 use App\Http\Controllers\TrophyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::prefix('manager')->name('manager')->group(callback: function () {
     Route::apiResource('/trophies' , TrophyController::class);
     Route::apiResource('/energy' , EnergyController::class);
     Route::apiResource('/multi_touch' , MultipleTouchesController::class);
+    Route::apiResource('/t_balance' , TBalanceController::class);
 //    Route::apiResource('energy-up' , EnergyUpController::class);
 });
 Route::prefix('status')->name('status')->group(function () {

@@ -5,62 +5,43 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTBalanceRequest;
 use App\Http\Requests\UpdateTBalanceRequest;
 use App\Models\Manager\TBalance;
+use App\Repository\TBalanceRepo;
 
 class TBalanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(public TBalanceRepo $balanceRepo)
+    {
+    }
+
     public function index()
     {
-        //
+        return $this->balanceRepo->index();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(StoreTBalanceRequest $request): \Illuminate\Http\JsonResponse
     {
-        //
+        $this->balanceRepo->create($request->only('amount'));
+        return response()->json(['message' => 'success create balance', 'status' => 'success'], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreTBalanceRequest $request)
+
+    public function show($tBalance)
     {
-        //
+        return $this->balanceRepo->getFindId($tBalance);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TBalance $tBalance)
+    public function update(UpdateTBalanceRequest $request, $tBalance): \Illuminate\Http\JsonResponse
     {
-        //
+        $id = $this->balanceRepo->getFindId($tBalance);
+        $this->balanceRepo->update($request->only('amount'), $id);
+        return response()->json(['message' => 'success create balance', 'status' => 'success'], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TBalance $tBalance)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTBalanceRequest $request, TBalance $tBalance)
+    public function destroy($tBalance): \Illuminate\Http\JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TBalance $tBalance)
-    {
-        //
+        $id = $this->balanceRepo->getFindId($tBalance);
+        $this->balanceRepo->delete($id->id);
+        return response()->json(['message' => 'success create balance', 'status' => 'success'], 200);
     }
 }

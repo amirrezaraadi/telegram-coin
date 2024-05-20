@@ -11,7 +11,7 @@ class UpdateTBalanceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateTBalanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amount' => ['nullable' , 'min:1' , 'max:250']
         ];
     }
 }
