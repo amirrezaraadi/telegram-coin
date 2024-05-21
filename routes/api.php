@@ -7,13 +7,11 @@ use App\Http\Controllers\Manager\UserController;
 use App\Http\Controllers\MultipleTouchesController;
 use App\Http\Controllers\TBalanceController;
 use App\Http\Controllers\TrophyController;
+use App\Http\Controllers\User\InfoUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 Route::prefix('manager')->name('manager')->group(callback: function () {
     Route::apiResource('/users' , UserController::class);
     Route::post('/users/add-wallet/{user}' , [UserController::class , 'add_wallet'])->name('add-wallet');
@@ -30,4 +28,6 @@ Route::prefix('status')->name('status')->group(function () {
 
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::post('login-register' , [RegisterController::class , 'auth'])->name('login-register');
+    Route::get('info-user' , InfoUserController::class )->name('info-user');
+
 });
