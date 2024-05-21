@@ -22,8 +22,7 @@ class InfoUserController extends Controller
         public trophyRepo           $trophyRepo,
         public rechargingRepo       $rechargingRepo,
         public multiple_touchesRepo $multiple_touchesRepo)
-    {
-    }
+    {}
 
     public function trophy(Request $request)
     {
