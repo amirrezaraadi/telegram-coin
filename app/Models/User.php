@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Manager\Energy;
 use App\Models\Manager\MultipleTouches;
+use App\Models\Manager\Recharging;
 use App\Models\Manager\TBalance;
 use App\Models\Manager\Trophy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,4 +86,12 @@ class User extends Authenticatable
             'multiple_touche_id'
         );
     }
+    public function recharging_many(): BelongsToMany
+    {
+        return $this->belongsToMany(Recharging::class, 'player_recharging',
+            'player_id',
+            'recharging_id'
+        );
+    }
+
 }

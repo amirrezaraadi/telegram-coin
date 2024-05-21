@@ -30,7 +30,7 @@ class EnergyController extends Controller
     }
 
 
-    public function show(Energy $energy)
+    public function show( $energy)
     {
         return $this->energyRepo->getFindId($energy);
     }
