@@ -4,18 +4,20 @@ namespace App\Repository;
 
 
 use App\Models\Manager\Energy;
+use App\Models\Pivot\PlayerEnergy;
 
 class energyRepo
 {
-    private $query ;
+    private $query;
+
     public function __construct()
     {
-        $this->query = Energy::query() ;
+        $this->query = Energy::query();
     }
 
     public function index()
     {
-        return $this->query->paginate() ;
+        return $this->query->paginate();
     }
 
     public function create($data)
@@ -35,10 +37,10 @@ class energyRepo
         return $this->query->findOrFail($id);
     }
 
-    public function update($data , $id)
+    public function update($data, $id)
     {
         $energyId = $this->getFindId($id);
-        return $this->query->where('id' , $id)->update([
+        return $this->query->where('id', $id)->update([
             'title' => $data['title'] ?? $energyId->title,
             'size' => $data['size'] ?? $energyId->size,
             'unit' => $data['unit'] ?? $energyId->unit,
@@ -47,14 +49,35 @@ class energyRepo
             'player_id' => 1
         ]);
     }
+
     public function delete($id)
     {
-        return $this->query->where('id' , $id)->delete();
+        return $this->query->where('id', $id)->delete();
     }
 
     public function getNameFirst($id)
     {
-        return $this->query->where('id' , $id)->select(['title', 'size', 'unit'])->first();
+        return $this->query->where('id', $id)->select(['title', 'size', 'unit'])->first();
+    }
+
+    public function getNameNext($id, $user)
+    {
+        $next = $id + 1;
+        $result = $this->query->where('id', $next)->select(['id' , 'title', 'size', 'unit', 'amount'])->first();
+        if (is_null($result)) {
+            return false;
+        }
+        if ($result) {
+            $amount = $user->t_balance->pluck('amount')->first();
+            if ($amount > $result->amount) {
+                $mandeh = $amount - $result->amount;
+                $save_user = $user->t_balance()->update(['amount' => $mandeh]);
+                $table = PlayerEnergy::getPlayerId($user->id);
+                $table->update(['energy_id' => $result->id ]);
+                dd('saSA');
+            }
+            dd('saSA');
+        }
     }
 
 

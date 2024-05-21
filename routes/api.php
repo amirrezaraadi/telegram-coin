@@ -9,6 +9,7 @@ use App\Http\Controllers\RechargingController;
 use App\Http\Controllers\TBalanceController;
 use App\Http\Controllers\TrophyController;
 use App\Http\Controllers\User\InfoUserController;
+use App\Http\Controllers\User\LevelUpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,11 @@ Route::prefix('landing')->name('landing.')->group(function () {
     Route::get('info-multi' , [InfoUserController::class , 'multi'] )->name('info-multi');
     Route::get('info-t_balance' , [InfoUserController::class , 't_balance'] )->name('info-t_balance');
     Route::get('info-recharging' , [InfoUserController::class , 'recharging'] )->name('info-recharging');
+});
+
+
+Route::prefix('level-up')->name('up.')->group(function () {
+    Route::get('energy' , [LevelUpController::class , 'energy'] )->name('info-energy');
+    Route::get('multi' , [LevelUpController::class , 'multi'] )->name('info-multi');
+    Route::get('recharging' , [LevelUpController::class , 'recharging'] )->name('info-recharging');
 });

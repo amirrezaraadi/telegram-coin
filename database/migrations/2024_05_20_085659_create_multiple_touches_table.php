@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('multiple_touches', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->float('unit')->nullable();
+            $table->string('unit')->nullable();
             $table->string('amount')->nullable();
             $table->boolean('is_default')->default(0);
             $table->timestamp('publish_at')->nullable();

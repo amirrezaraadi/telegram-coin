@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('size')->nullable();
-            $table->float('unit')->nullable();
+            $table->string('unit')->nullable();
             $table->boolean('is_default')->default(0);
             $table->softDeletes();
             $table->timestamps();

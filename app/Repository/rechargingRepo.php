@@ -58,5 +58,13 @@ class rechargingRepo
         return $this->query->where('id' , $id)->select(['title', 'size', 'unit'])->first();
     }
 
-
+    public function getNameNext($id)
+    {
+        $next = $id + 1;
+        $result = $this->query->where('id', $next)->select(['title', 'size', 'unit'])->first();
+        if ( is_null($result )) {
+            return false ;
+        }
+        return $result ;
+    }
 }

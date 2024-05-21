@@ -53,4 +53,14 @@ class multiple_touchesRepo
     {
         return $this->query->where('id' , $id)->select(['title', 'unit'])->first();
     }
+
+    public function getNameNext($id)
+    {
+        $next = $id + 1;
+        $result = $this->query->where('id', $next)->select(['title', 'unit'])->first();
+        if ( is_null($result )) {
+            return false ;
+        }
+        return $result ;
+    }
 }
