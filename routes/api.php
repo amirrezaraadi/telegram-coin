@@ -29,5 +29,5 @@ Route::prefix('status')->name('status')->group(function () {
 });
 
 Route::prefix('auth')->name('auth.')->group(function () {
-    Route::post('auth' , [RegisterController::class , 'auth'])->name('auth');
+    Route::post('login-register' , [RegisterController::class , 'auth'])->name('login-register');
 });
