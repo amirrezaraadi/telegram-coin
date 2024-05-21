@@ -6,11 +6,12 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Energy extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory, SoftDeletes;
 
 
     protected $fillable = [
@@ -26,8 +27,10 @@ class Energy extends Model
         'publish_at' => 'timestamp'
     ];
 
-    public function user():BelongsTo
+    public function user(): BelongsToMany
     {
-        return $this->belongsTo(User::class, 'player_id');
+        return $this->belongsToMany(User::class, 'player_energy',
+            'energy_id',
+            'player_id');
     }
 }

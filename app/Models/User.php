@@ -8,6 +8,7 @@ use App\Models\Manager\MultipleTouches;
 use App\Models\Manager\TBalance;
 use App\Models\Manager\Trophy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,8 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable
-//        , SoftDeletes
+    use HasApiTokens, HasFactory, Notifiable//        , SoftDeletes
         ;
 
 
@@ -44,21 +44,45 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function t_balance():HasMany
+    public function t_balance(): HasMany
     {
-        return $this->hasMany(TBalance::class , 'player_id');
+        return $this->hasMany(TBalance::class, 'player_id');
     }
-    public function t_energy():HasMany
+//
+//    public function energy(): HasMany
+//    {
+//        return $this->hasMany(Energy::class, 'player_id');
+//    }
+//
+//    public function trophy(): HasMany
+//    {
+//        return $this->hasMany(Trophy::class, 'player_id');
+//    }
+
+    public function multi_touche(): HasMany
     {
-        return $this->hasMany(Energy::class , 'player_id');
-    }
-    public function trophy():HasMany
-    {
-        return $this->hasMany(Trophy::class , 'player_id');
-    }
-    public function multi_touche():HasMany
-    {
-        return $this->hasMany(MultipleTouches::class , 'player_id');
+        return $this->hasMany(MultipleTouches::class, 'player_id');
     }
 
+    public function energy_many(): BelongsToMany
+    {
+        return $this->belongsToMany(Energy::class, 'player_energy',
+            'player_id',
+            'energy_id');
+    }
+
+    public function trophy_many(): BelongsToMany
+    {
+        return $this->belongsToMany(Trophy::class, 'player_trophy',
+            'player_id',
+            'trophy_id');
+    }
+
+    public function multi_touche_many(): BelongsToMany
+    {
+        return $this->belongsToMany(MultipleTouches::class, 'player_multiple',
+            'player_id',
+            'multiple_touche_id'
+        );
+    }
 }
