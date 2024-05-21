@@ -26,8 +26,8 @@ class InfoUserController extends Controller
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
-        $playerTrophy = PlayerTrophy::query()->where('player_id', $user->id)->first();
-        return  $this->trophyRepo->getNameFirst($playerTrophy->trophy_id);
+        $playerTrophy = PlayerTrophy::getPlayerId($user->id);
+        return $this->trophyRepo->getNameFirst($playerTrophy->trophy_id);
 
     }
 
@@ -35,8 +35,16 @@ class InfoUserController extends Controller
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
-        $energy = PlayerEnergy::query()->where('player_id' , $user->id)->first();
+        $energy = PlayerEnergy::getPlayerId($user->id);
         return $this->energyRepo->getNameFirst($energy->energy_id);
+    }
+
+    public function multi(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $PlayerMulti = PlayerMulti::getPLayerId($user->id);
+        return $this->multiple_touchesRepo->getNameFirst($PlayerMulti->multiple_touche_id);
     }
 
     public function t_balance(Request $request)
@@ -44,13 +52,6 @@ class InfoUserController extends Controller
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
         return $user->t_balance->select('amount')->first();
-    }
-    public function multi(Request $request)
-    {
-        $header = $request->header('info-user');
-        $user = $this->userRepo->getIdName($header);
-        $PlayerMulti = PlayerMulti::query()->where('player_id' , $user->id )->first();
-        return $this->multiple_touchesRepo->getNameFirst($PlayerMulti->multiple_touche_id);
     }
 
 }

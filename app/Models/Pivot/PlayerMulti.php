@@ -12,4 +12,10 @@ class PlayerMulti extends Pivot
      * Relationships
      */
     protected $fillable = ['player_id', 'multiple_touche_id'];
+
+
+    public static function getPLayerId($id)
+    {
+        return parent::query()->where('player_id' , $id )->first();
+    }
 }

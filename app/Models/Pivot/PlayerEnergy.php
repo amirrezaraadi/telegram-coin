@@ -12,4 +12,9 @@ class PlayerEnergy extends Pivot
      * Relationships
      */
     protected $fillable = ['player_id', 'energy_id'];
+
+    public static function getPlayerId($id)
+    {
+        return parent::query()->where('player_id', $id)->first();
+    }
 }

@@ -12,4 +12,9 @@ class PlayerTrophy extends Pivot
      * Relationships
      */
     protected $fillable = ['player_id', 'trophy_id'];
+
+    public static function getPlayerId($id)
+    {
+        return parent::query()->where('player_id',$id)->first();
+    }
 }
