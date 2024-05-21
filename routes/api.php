@@ -28,6 +28,13 @@ Route::prefix('status')->name('status')->group(function () {
 
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::post('login-register' , [RegisterController::class , 'auth'])->name('login-register');
-    Route::get('info-user' , InfoUserController::class )->name('info-user');
+});
 
+
+
+Route::prefix('landing')->name('landing.')->group(function () {
+    Route::get('info-trophy' , [InfoUserController::class , 'trophy'] )->name('info-trophy');
+    Route::get('info-energy' , [InfoUserController::class , 'energy'] )->name('info-energy');
+    Route::get('info-multi' , [InfoUserController::class , 'multi'] )->name('info-multi');
+    Route::get('info-t_balance' , [InfoUserController::class , 't_balance'] )->name('info-t_balance');
 });

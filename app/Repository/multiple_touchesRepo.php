@@ -48,4 +48,9 @@ class multiple_touchesRepo
     {
         return $this->query->where('id' , $id)->delete();
     }
+
+    public function getNameFirst( $id)
+    {
+        return $this->query->where('id' , $id)->select(['title', 'unit'])->first();
+    }
 }

@@ -51,4 +51,9 @@ class trophyRepo
         if ($id->is_default=== 1)
             return $this->query->where('id', $id->id)->update(['is_default' => 0]);
     }
+
+    public function getNameFirst($id)
+    {
+        return $this->query->where('id' , $id)->selectRaw('title')->first();
+    }
 }
