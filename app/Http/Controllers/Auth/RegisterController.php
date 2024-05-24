@@ -24,6 +24,9 @@ class RegisterController extends Controller
 
     public function auth(Request $request , $int)
     {
+        dd($request->json()->all());
+
+
         $user = resolve(userRepo::class)->getIdName($int);
         if (is_null($user)) {
             $save = resolve(userRepo::class)->create($int);
