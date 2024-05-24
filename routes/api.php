@@ -13,7 +13,7 @@ use App\Http\Controllers\User\LevelUpController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('manager')->name('manager')->group(callback: function () {
+Route::middleware('ActivityByUser')->prefix('manager')->name('manager')->group(callback: function () {
     Route::apiResource('/users' , UserController::class);
     Route::post('/users/add-wallet/{user}' , [UserController::class , 'add_wallet'])->name('add-wallet');
     Route::get('/users-state-chart' , [UserController::class , 'users_state_chart'])->name('users-state-chart');
@@ -34,7 +34,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
 
 
 
-Route::prefix('landing')->name('landing.')->group(function () {
+Route::middleware('ActivityByUser')->prefix('landing')->name('landing.')->group(function () {
     Route::get('info-trophy' , [InfoUserController::class , 'trophy'] )->name('info-trophy');
     Route::get('info-energy' , [InfoUserController::class , 'energy'] )->name('info-energy');
     Route::get('info-multi' , [InfoUserController::class , 'multi'] )->name('info-multi');
@@ -46,7 +46,7 @@ Route::prefix('landing')->name('landing.')->group(function () {
 });
 
 
-Route::prefix('level-up')->name('up.')->group(function () {
+Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(function () {
     Route::get('energy' , [LevelUpController::class , 'energy'] )->name('info-energy');
     Route::get('multi' , [LevelUpController::class , 'multi'] )->name('info-multi');
     Route::get('recharging' , [LevelUpController::class , 'recharging'] )->name('info-recharging');
