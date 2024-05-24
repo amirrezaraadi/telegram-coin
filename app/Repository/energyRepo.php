@@ -63,21 +63,20 @@ class energyRepo
     public function getNameNext($id, $user)
     {
         $next = $id + 1;
-        $result = $this->query->where('id', $next)->select(['id' , 'title', 'size', 'unit', 'amount'])->first();
+        $result = $this->query->where('id', $next)->select(['id', 'title', 'size', 'unit', 'amount'])->first();
         if (is_null($result)) {
             return false;
         }
-        if ($result) {
-            $amount = $user->t_balance->pluck('amount')->first();
-            if ($amount > $result->amount) {
-                $mandeh = $amount - $result->amount;
-                $save_user = $user->t_balance()->update(['amount' => $mandeh]);
-                $table = PlayerEnergy::getPlayerId($user->id);
-                $table->update(['energy_id' => $result->id ]);
-                dd('saSA');
-            }
-            dd('saSA');
+        $amount = $user->t_balance->pluck('amount')->first();
+        $checkCache = $amount > $result->amount;
+        if (! $checkCache) {
+            return false;
         }
+        $remaining = $amount - $result->amount;
+        $save_user = $user->t_balance()->update(['amount' => $remaining]);
+        $table = PlayerEnergy::getPlayerId($user->id);
+        $table->update(['energy_id' => $result->id]);
+        return $result;
     }
 
 

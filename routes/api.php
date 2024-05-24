@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EnergyController;
-use App\Http\Controllers\EnergyUpController;
+use App\Http\Controllers\Front\StatsController;
 use App\Http\Controllers\Manager\UserController;
 use App\Http\Controllers\MultipleTouchesController;
 use App\Http\Controllers\RechargingController;
@@ -10,7 +10,6 @@ use App\Http\Controllers\TBalanceController;
 use App\Http\Controllers\TrophyController;
 use App\Http\Controllers\User\InfoUserController;
 use App\Http\Controllers\User\LevelUpController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -41,6 +40,9 @@ Route::prefix('landing')->name('landing.')->group(function () {
     Route::get('info-multi' , [InfoUserController::class , 'multi'] )->name('info-multi');
     Route::get('info-t_balance' , [InfoUserController::class , 't_balance'] )->name('info-t_balance');
     Route::get('info-recharging' , [InfoUserController::class , 'recharging'] )->name('info-recharging');
+
+    Route::get('info-stats' , StatsController::class )->name('info-stats');
+
 });
 
 
