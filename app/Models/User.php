@@ -43,6 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'last_seen' => 'datetime',
         'password' => 'hashed',
+
     ];
 
     public function t_balance(): HasMany

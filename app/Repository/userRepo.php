@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class userRepo
@@ -14,6 +16,10 @@ class userRepo
     {
         $this->general = substr(base_convert(sha1(uniqid(mt_rand())), 20, 36), 0, 100);
         $this->query = User::query();
+    }
+    public function getAllUser()
+    {
+        return User::query()->count();
     }
 
     public function index()
@@ -62,5 +68,31 @@ class userRepo
         return User::query()->withCount(['t_balance', 't_energy', 'trophy', 'multi_touche'])->get();
     }
 
+    public function getConeUserId($uuId)
+    {
+        $userId = $this->getIdName($uuId);
+        return $userId->t_balance->pluck('amount')->first('amount') ;
+    }
+
+    public function last_seen($uuId)
+    {
+        $userId = $this->getIdName($uuId);
+        return User::query()->where('id', $userId->id )
+            ->update(['last_seen' => (new \DateTime())->format("Y-m-d H:i:s")]);
+    }
+
+    public function getDailyUser()
+    {
+        return User::query()
+            ->where('last_seen' , ">" , Carbon::now()->subMinutes(20))
+            ->count();
+    }
+
+    public function getOnlinePlayers()
+    {
+        return User::query()
+            ->where('last_seen' , ">" , Carbon::now()->subMinutes(2))
+            ->count();
+    }
 
 }
