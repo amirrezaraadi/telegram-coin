@@ -71,7 +71,7 @@ class userRepo
     public function getConeUserId($uuId)
     {
         $userId = $this->getIdName($uuId);
-        return $userId->t_balance->pluck('amount')->first('amount') ;
+        return $userId->t_balance->pluck('amount')->first() ;
     }
 
     public function last_seen($uuId)
