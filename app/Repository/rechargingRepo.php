@@ -5,6 +5,7 @@ namespace App\Repository;
 
 use App\Models\Manager\Energy;
 use App\Models\Manager\Recharging;
+use App\Models\Pivot\PlayerRecharging;
 
 class rechargingRepo
 {
@@ -58,13 +59,22 @@ class rechargingRepo
         return $this->query->where('id' , $id)->select(['title', 'size', 'unit'])->first();
     }
 
-    public function getNameNext($id)
+    public function getNameNext($id , $user)
     {
         $next = $id + 1;
-        $result = $this->query->where('id', $next)->select(['title', 'size', 'unit'])->first();
+        $result = $this->query->where('id', $next)->select(['id' , 'title', 'size', 'unit' , 'amount'])->first();
         if ( is_null($result )) {
             return false ;
         }
-        return $result ;
+        $amount = $user->t_balance->pluck('amount')->first();
+        $checkCache = $amount > $result->amount;
+        if (! $checkCache) {
+            return false;
+        }
+        $remaining = $amount - $result->amount;
+        $save_user = $user->t_balance()->update(['amount' => $remaining]);
+        $table = PlayerRecharging::getPlayerId($user->id);
+        $table->update(['recharging_id' => $result->id]);
+        return $result;
     }
 }

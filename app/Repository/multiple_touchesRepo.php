@@ -54,13 +54,29 @@ class multiple_touchesRepo
         return $this->query->where('id' , $id)->select(['title', 'unit'])->first();
     }
 
-    public function getNameNext($id)
+    public function getNameNext($id , $user)
     {
         $next = $id + 1;
         $result = $this->query->where('id', $next)->select(['title', 'unit'])->first();
         if ( is_null($result )) {
             return false ;
         }
-        return $result ;
+
+        dd($user);
+        $amount = $user->t_balance->pluck('amount')->first();
+        $checkCache = $amount > $result->amount;
+        if (! $checkCache) {
+            return false;
+        }
+        $remaining = $amount - $result->amount;
+        $save_user = $user->t_balance()->update(['amount' => $remaining]);
+        $table = PlayerEnergy::getPlayerId($user->id);
+        $table->update(['energy_id' => $result->id]);
+        return $result;
+
+
+
+
+
     }
 }
