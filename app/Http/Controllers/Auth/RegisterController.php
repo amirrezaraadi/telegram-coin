@@ -16,18 +16,17 @@ class RegisterController extends Controller
     public function __construct(public energyRepo           $energyRepo,
                                 public trophyRepo           $trophyRepo,
                                 public multiple_touchesRepo $multiple_touchesRepo,
-                                public rechargingRepo $rechargingRepo,
+                                public rechargingRepo       $rechargingRepo,
 
     )
     {
     }
 
-    public function auth(Request $request)
+    public function auth(Request $request , $int)
     {
-        $input = $request->uuid_name;
-        $user = resolve(userRepo::class)->getIdName($input);
+        $user = resolve(userRepo::class)->getIdName($int);
         if (is_null($user)) {
-            $save = resolve(userRepo::class)->create($request);
+            $save = resolve(userRepo::class)->create($int);
             $save->t_balance()->create(['amount' => 0]);
             $trophyRepo = $this->trophyRepo->getFindId(1);
             $multiple = $this->multiple_touchesRepo->getFindId(1);
@@ -37,9 +36,8 @@ class RegisterController extends Controller
             $save->trophy_many()->attach($trophyRepo->id);
             $save->multi_touche_many()->attach($multiple->id);
             $save->recharging_many()->attach($multiple->id);
-            $token = $save->createToken($save->uuid_name  , ['server:update'])->plainTextToken;
-            return response()->json(['token' => $token , 'status' => 'create new player '],200);
+            return response()->json(['user' => $save, 'status' => 'create new player '], 200);
         }
-        return $user ;
+        return $user;
     }
 }

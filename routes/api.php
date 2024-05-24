@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EnergyController;
 use App\Http\Controllers\Front\StatsController;
+use App\Http\Controllers\Front\TokenController;
 use App\Http\Controllers\Manager\UserController;
 use App\Http\Controllers\MultipleTouchesController;
 use App\Http\Controllers\RechargingController;
@@ -29,7 +30,7 @@ Route::prefix('status')->name('status')->group(function () {
 });
 
 Route::prefix('auth')->name('auth.')->group(function () {
-    Route::post('login-register' , [RegisterController::class , 'auth'])->name('login-register');
+        Route::post('login-register/{int}' , [RegisterController::class , 'auth'])->name('login-register');
 });
 
 
@@ -40,9 +41,8 @@ Route::middleware('ActivityByUser')->prefix('landing')->name('landing.')->group(
     Route::get('info-multi' , [InfoUserController::class , 'multi'] )->name('info-multi');
     Route::get('info-t_balance' , [InfoUserController::class , 't_balance'] )->name('info-t_balance');
     Route::get('info-recharging' , [InfoUserController::class , 'recharging'] )->name('info-recharging');
-
     Route::get('info-stats' , StatsController::class )->name('info-stats');
-
+    Route::post('/token' , [TokenController::class , 'index']);
 });
 
 
@@ -51,3 +51,4 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
     Route::get('multi' , [LevelUpController::class , 'multi'] )->name('info-multi');
     Route::get('recharging' , [LevelUpController::class , 'recharging'] )->name('info-recharging');
 });
+

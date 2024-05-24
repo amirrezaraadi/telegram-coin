@@ -17,6 +17,7 @@ class userRepo
         $this->general = substr(base_convert(sha1(uniqid(mt_rand())), 20, 36), 0, 100);
         $this->query = User::query();
     }
+
     public function getAllUser()
     {
         return User::query()->count();
@@ -33,11 +34,12 @@ class userRepo
 //            $check = Str::after($data['id_tele'], '@');
 //        }
         return $this->query->create([
-            'uuid_name' => $data['uuid_name'] ?? $this->general,
-            'id_tele' => $data['id_tele'] ?? null,
-            'name' => Str::after($data['id_tele'], '@') ?? 'null',
-            'phone' => $data['phone'] ?? null,
-            'remember_token' => Str::uuid(Str::random(15))
+            'uuid_name' => $data,
+            'id_tele' => Str::random(4) ?? null,
+            'name' => Str::random(4) ?? 'null',
+            'phone' => Str::random(4) ?? null,
+            'remember_token' => Str::uuid(Str::random(15)),
+            'last_seen' => now(),
         ]);
     }
 
@@ -71,27 +73,27 @@ class userRepo
     public function getConeUserId($uuId)
     {
         $userId = $this->getIdName($uuId);
-        return $userId->t_balance->pluck('amount')->first() ;
+        return $userId->t_balance->pluck('amount')->first();
     }
 
     public function last_seen($uuId)
     {
         $userId = $this->getIdName($uuId);
-        return User::query()->where('id', $userId->id )
+        return User::query()->where('id', $userId->id)
             ->update(['last_seen' => (new \DateTime())->format("Y-m-d H:i:s")]);
     }
 
     public function getDailyUser()
     {
         return User::query()
-            ->where('last_seen' , ">" , Carbon::now()->subMinutes(20))
+            ->where('last_seen', ">", Carbon::now()->subMinutes(20))
             ->count();
     }
 
     public function getOnlinePlayers()
     {
         return User::query()
-            ->where('last_seen' , ">" , Carbon::now()->subMinutes(2))
+            ->where('last_seen', ">", Carbon::now()->subMinutes(2))
             ->count();
     }
 
