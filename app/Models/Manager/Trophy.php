@@ -16,7 +16,7 @@ class Trophy extends Model
         , SoftDeletes
         ;
 
-    protected $fillable = ['title', 'is-default', 'player_id'];
+    protected $fillable = ['title', 'is-default'];
 
 
     public function user(): BelongsTo

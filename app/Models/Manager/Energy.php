@@ -20,7 +20,6 @@ class Energy extends Model
         'unit',
         'amount',
         'is_default',
-        'player_id'
     ];
 
     protected $casts = [

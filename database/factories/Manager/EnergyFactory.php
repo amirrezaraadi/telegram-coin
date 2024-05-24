@@ -17,7 +17,10 @@ class EnergyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title,
+            'size' => $this->faker->numberBetween(111, 999),
+            'unit' => $this->faker->numberBetween(1, 9),
+            'amount' => $this->faker->numberBetween(11111, 99999),
         ];
     }
 }

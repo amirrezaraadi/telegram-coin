@@ -15,10 +15,6 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->boolean('is_default')->default(0);
             $table->softDeletes();
-            $table->foreignId('player_id')
-                ->constrained('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

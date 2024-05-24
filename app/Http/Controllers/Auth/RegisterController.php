@@ -22,23 +22,18 @@ class RegisterController extends Controller
     {
     }
 
-    public function auth(Request $request , $int)
+    public function auth(Request $request, $int)
     {
-        dd($request->json()->all());
-
-
         $user = resolve(userRepo::class)->getIdName($int);
         if (is_null($user)) {
             $save = resolve(userRepo::class)->create($int);
             $save->t_balance()->create(['amount' => 0]);
             $trophyRepo = $this->trophyRepo->getFindId(1);
-            $multiple = $this->multiple_touchesRepo->getFindId(1);
             $energy = $this->energyRepo->getFindId(1);
             $recharging = $this->rechargingRepo->getFindId(1);
             $save->energy_many()->attach($energy->id);
             $save->trophy_many()->attach($trophyRepo->id);
-            $save->multi_touche_many()->attach($multiple->id);
-            $save->recharging_many()->attach($multiple->id);
+            $save->recharging_many()->attach($recharging->id);
             return response()->json(['user' => $save, 'status' => 'create new player '], 200);
         }
         return $user;

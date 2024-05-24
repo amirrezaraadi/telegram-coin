@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Manager\Energy;
+use App\Models\Manager\Recharging;
+use App\Models\Manager\Trophy;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,7 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+         User::factory(10)->create();
+         Energy::factory(10)->create();
+         Recharging::factory(10)->create();
+         Trophy::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
