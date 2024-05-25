@@ -58,9 +58,12 @@ class LevelUpController extends Controller
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
         $recharging = PlayerRobot::getPlayerId($user->id);
-        $rechargingId = $recharging->recharging_id ?? 0;
-        $id = $rechargingId + 1 ;
-        $result = $this->robotRepo->getFindIdName($id);
+        $rechargingId = $recharging->robot_id ?? 0;
+        if($rechargingId === 0){
+            $id = $rechargingId + 1 ;
+        }
+        $id_robot = $rechargingId ?? $id ;
+        $result = $this->robotRepo->getFindIdName($id_robot);
         if (is_null($result )) {
             return response()->json(['message' => 'The last step'], 401);
         }
@@ -98,7 +101,7 @@ class LevelUpController extends Controller
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
         $recharging = PlayerRobot::getPlayerId($user->id) ;
-        $rechargingId = $recharging->recharging_id ?? 0;
+        $rechargingId = $recharging->robot_id ?? 0;
         $result = $this->robotRepo->getNameNext($rechargingId, $user);
         if ($result === false) {
             return response()->json(['message' => 'The last step'], 401);

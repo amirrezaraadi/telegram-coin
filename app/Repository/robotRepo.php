@@ -60,9 +60,18 @@ class robotRepo
             return false;
         }
         $remaining = $amount - $result->amount;
+        $table = PlayerRobot::getPlayerId($user->id) ;
+        if(is_null($table)){
+            PlayerRobot::query()->create([
+                'player_id' => $user->id ,
+                'robot_id' => $result->id ,
+            ]);
+            $save_user = $user->t_balance()->update(['amount' => $remaining]);
+            //TODO
+            return $result;
+        }
+        $table->update(['robot_id' => $result->id]);
         $save_user = $user->t_balance()->update(['amount' => $remaining]);
-        $table = PlayerRobot::getPlayerId($user->id);
-        $table->update(['recharging_id' => $result->id]);
         //TODO
         return $result;
     }
