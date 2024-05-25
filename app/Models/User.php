@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Jobs\TokenJob;
 use App\Models\Manager\Energy;
 use App\Models\Manager\MultipleTouches;
 use App\Models\Manager\Recharging;
@@ -65,7 +66,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(MultipleTouches::class, 'player_id');
     }
-
+    public function token(): HasMany
+    {
+        return $this->hasMany(Token::class, 'player_id');
+    }
     public function energy_many(): BelongsToMany
     {
         return $this->belongsToMany(Energy::class, 'player_energy',

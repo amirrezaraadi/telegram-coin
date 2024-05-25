@@ -24,9 +24,11 @@ class StatsController extends Controller
         }
         $totalPlayer = $this->userRepo->getAllUser();
         $dailyDays =  $this->userRepo->getDailyUser();
+        $totalTouch =  $this->userRepo->getTotalTouch();
         $online_Player =  $this->userRepo->getOnlinePlayers();
         return response()->json([
-            'total share balance' => $coinIUserId ,
+            'totalTouch' => $totalTouch ,
+            'totalShareBalance' => $coinIUserId ,
             'totalPlayer' => $totalPlayer,
             'dailyDays' => $dailyDays,
             'online_Player' => $online_Player,

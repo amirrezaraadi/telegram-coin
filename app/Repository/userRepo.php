@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\Manager\TBalance;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -97,4 +98,8 @@ class userRepo
             ->count();
     }
 
+    public function getTotalTouch()
+    {
+       return TBalance::query()->sum('amount');
+    }
 }

@@ -2,24 +2,30 @@
 
 namespace App\Listeners;
 
+use App\Events\TokenEvent;
+use App\Jobs\TokenJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 class TokenListener
 {
-    /**
-     * Create the event listener.
-     */
+
     public function __construct()
     {
         //
     }
 
     /**
-     * Handle the event.
+     * @param  TokenEvent $event
+     * @return void
      */
-    public function handle(object $event): void
+    public function handle(TokenEvent $event)
     {
-        dd($event , 'asdsads');
+        dd($event);
+        dd( $event->getRequest());
+        TokenJob::dispatch(
+            $event->getRequest(),
+            $event->getUser(),
+        );
     }
 }

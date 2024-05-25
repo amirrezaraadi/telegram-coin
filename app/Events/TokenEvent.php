@@ -2,41 +2,48 @@
 
 namespace App\Events;
 
+use App\Jobs\TokenJob;
 use App\Models\User;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 
 class TokenEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $token;
+    public $request;
+    public $user;
 
-    public function __construct(User $user)
+    public function __construct(Request $request, User $user)
     {
-        $this->token = $user;
+        $this->request = $request;
+        $this->user = $user;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
     public function broadcastOn(): array
     {
-        return [
-            new Channel('token_' . $this->token->id ),
-        ];
+//        return [
+//            new Channel('token_' .$this->user->id ),
+//        ];
     }
 
     public function broadcastAs()
     {
         return 'count_token';
     }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+
 }
