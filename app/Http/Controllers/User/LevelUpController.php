@@ -59,6 +59,7 @@ class LevelUpController extends Controller
         if ( $result === false ) {
             return response()->json(['message' => 'The last step'],401);
         }
+
         return $result ;
     }
     public function robot(Request $request)
