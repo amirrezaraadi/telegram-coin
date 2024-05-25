@@ -42,6 +42,7 @@ class RegisterController extends Controller
             $level = $this->multiple_touchesRepo->getNameCheck( $level_up->multiple_touche_id);
             return response()->json(['user' => $save, 'level' => $level ,  'status' => 'create new player '], 200);
         }
+
         $level_up = PlayerMulti::query()->where('player_id' , $user->id)->first();
         $level = $this->multiple_touchesRepo->getNameCheck( $level_up->multiple_touche_id);
         return response()->json(['user' => $user , 'level' => $level ,  'status' => 'create new player '], 200);
