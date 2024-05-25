@@ -8,9 +8,7 @@ use Illuminate\Support\ServiceProvider;
 
 class WebSocketServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
+
     public function register(): void
     {
         //
@@ -18,9 +16,9 @@ class WebSocketServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Redis::subscribe(['send_token'], function ($message) {
-            $data = json_decode($message, true);
-            event(new \App\Events\TokenEvent($data));
-        });
+//        Redis::subscribe(['send_token'], function ($message) {
+//            $data = json_decode($message, true);
+//            event(new \App\Events\TokenEvent($data));
+//        });
     }
 }
