@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Manager\Energy;
 use App\Models\Manager\Recharging;
 use App\Models\Manager\Trophy;
+use App\Models\Robot;
 use App\Models\Token;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
          Recharging::factory(10)->create();
          Trophy::factory(10)->create();
          Token::factory(10)->create();
+         Robot::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

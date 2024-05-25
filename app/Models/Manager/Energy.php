@@ -25,6 +25,13 @@ class Energy extends Model
     protected $casts = [
         'publish_at' => 'timestamp'
     ];
+    protected $hidden = [
+        'deleted_at' ,
+        'publish_at' ,
+        'created_at' ,
+        'updated_at',
+        'is_default',
+    ];
 
     public function user(): BelongsToMany
     {

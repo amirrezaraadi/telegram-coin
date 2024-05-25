@@ -23,6 +23,7 @@ Route::middleware('ActivityByUser')->prefix('manager')->name('manager')->group(c
     Route::apiResource('/recharging', RechargingController::class);
     Route::apiResource('/multi_touch', MultipleTouchesController::class);
     Route::apiResource('/t_balance', TBalanceController::class);
+    Route::apiResource('/robot', \App\Http\Controllers\RobotController::class);
 //    Route::apiResource('energy-up' , EnergyUpController::class);
 });
 Route::prefix('status')->name('status')->group(function () {
@@ -50,4 +51,10 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
     Route::get('energy', [LevelUpController::class, 'energy'])->name('info-energy');
     Route::get('multi', [LevelUpController::class, 'multi'])->name('info-multi');
     Route::get('recharging', [LevelUpController::class, 'recharging'])->name('info-recharging');
+    Route::get('robot', [LevelUpController::class, 'robot'])->name('info-robot');
+
+    Route::get('energy-up', [LevelUpController::class, 'energy_up'])->name('info-energy-up');
+    Route::get('multi-up', [LevelUpController::class, 'multi_up'])->name('info-multi-up');
+    Route::get('recharging-up', [LevelUpController::class, 'recharging_up'])->name('info-recharging-up');
+    Route::get('robot-up', [LevelUpController::class, 'robot_up'])->name('info-robot-up');
 });

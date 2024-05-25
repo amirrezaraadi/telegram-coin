@@ -36,7 +36,10 @@ class energyRepo
     {
         return $this->query->findOrFail($id);
     }
-
+    public function getFindIdName($id)
+    {
+        return $this->query->where('id', $id)->first();
+    }
     public function update($data, $id)
     {
         $energyId = $this->getFindId($id);

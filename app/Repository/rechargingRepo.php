@@ -28,13 +28,18 @@ class rechargingRepo
             'unit' => $data['unit'],
             'amount' => $data['amount'],
             'is_default' => 0,
-            'player_id' => 1
         ]);
     }
 
     public function getFindId($id)
     {
         return $this->query->findOrFail($id);
+    }
+
+
+    public function getFindIdName($id)
+    {
+        return $this->query->where('id', $id)->first();
     }
 
     public function update($data , $id)
@@ -46,7 +51,6 @@ class rechargingRepo
             'unit' => $data['unit'] ?? $recharging->unit,
             'amount' => $data['amount'] ?? $recharging->amount,
             'is_default' => $data['is_default'] ?? $recharging->is_default,
-            'player_id' => 1
         ]);
     }
     public function delete($id)
