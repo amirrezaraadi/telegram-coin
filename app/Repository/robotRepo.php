@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Models\Pivot\PlayerRobot;
 use App\Models\Robot;
 
 class robotRepo
@@ -28,10 +27,7 @@ class robotRepo
     {
         return Robot::query()->findOrFail($id);
     }
-    public function getFindIdName($id)
-    {
-        return Robot::query()->where('id' , $id)->first();
-    }
+
     public function update($data, $id)
     {
         return Robot::query()->where('id', $id)->update([
@@ -45,25 +41,5 @@ class robotRepo
     public function delete($id)
     {
         return Robot::query()->where('id', $id)->delete();
-    }
-
-    public function getNameNext($id , $user)
-    {
-        $next = $id + 1;
-        $result = Robot::query()->where('id', $next)->select(['id' , 'title', 'hour', 'token' , 'amount'])->first();
-        if ( is_null($result )) {
-            return false ;
-        }
-        $amount = $user->t_balance->pluck('amount')->first();
-        $checkCache = $amount > $result->amount;
-        if (! $checkCache) {
-            return false;
-        }
-        $remaining = $amount - $result->amount;
-        $save_user = $user->t_balance()->update(['amount' => $remaining]);
-        $table = PlayerRobot::getPlayerId($user->id);
-        $table->update(['recharging_id' => $result->id]);
-        //TODO
-        return $result;
     }
 }

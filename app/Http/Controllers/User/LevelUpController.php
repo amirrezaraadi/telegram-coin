@@ -10,10 +10,8 @@ use App\Models\Pivot\PlayerRobot;
 use App\Repository\energyRepo;
 use App\Repository\multiple_touchesRepo;
 use App\Repository\rechargingRepo;
-use App\Repository\robotRepo;
 use App\Repository\trophyRepo;
 use App\Repository\userRepo;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 class LevelUpController extends Controller
@@ -24,87 +22,22 @@ class LevelUpController extends Controller
         public energyRepo           $energyRepo,
         public trophyRepo           $trophyRepo,
         public rechargingRepo       $rechargingRepo,
-        public robotRepo            $robotRepo,
         public multiple_touchesRepo $multiple_touchesRepo)
     {
     }
-
     public function energy(Request $request)
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
         $energyId = PlayerEnergy::getPlayerId($user->id);
-        $id = $energyId->energy_id + 1;
-        $check = $this->energyRepo->getFindIdName($id);
-        if (is_null($check)) {
-            return 'not id ';
-        }
-        return $check;
-    }
-    public function recharging(Request $request)
-    {
-        $header = $request->header('info-user');
-        $user = $this->userRepo->getIdName($header);
-        $recharging = PlayerRecharging::getPlayerId($user->id);
-        $id = $recharging->recharging_id + 1;
-        $check = $this->rechargingRepo->getFindIdName($id);
-        if (is_null($check)) {
-            return response()->json(['message' => 'The last step'], 401);
-        }
-        return $check;
-    }
-    public function robot(Request $request)
-    {
-        $header = $request->header('info-user');
-        $user = $this->userRepo->getIdName($header);
-        $recharging = PlayerRobot::getPlayerId($user->id);
-        $rechargingId = $recharging->recharging_id ?? 0;
-        $id = $rechargingId + 1 ;
-        $result = $this->robotRepo->getFindIdName($id);
-        if (is_null($result )) {
-            return response()->json(['message' => 'The last step'], 401);
-        }
-        return $result;
-    }
-
-    public function recharging_up(Request $request)
-    {
-        $header = $request->header('info-user');
-        $user = $this->userRepo->getIdName($header);
-        $recharging = PlayerRecharging::getPlayerId($user->id);
-        $result = $this->rechargingRepo->getNameNext($recharging->recharging_id, $user);
-        if ($result === false) {
-            return response()->json(['message' => 'The last step'], 401);
-        }
-        return $result;
-    }
-
-    public function energy_up(Request $request)
-    {
-        $header = $request->header('info-user');
-        $user = $this->userRepo->getIdName($header);
-        $energyId = PlayerEnergy::getPlayerId($user->id);
-        $result = $this->energyRepo->getNameNext($energyId->energy_id, $user);
+        $result = $this->energyRepo->getNameNext($energyId->energy_id , $user);
 
         if ($result === false) {
-            return response()->json(['message' => 'The last step'], 401);
+            return response()->json(['message' => 'The last step'],401);
         }
-        return $result;
+        return $result ;
     }
 
-
-    public function robot_up(Request $request)
-    {
-        $header = $request->header('info-user');
-        $user = $this->userRepo->getIdName($header);
-        $recharging = PlayerRobot::getPlayerId($user->id) ;
-        $rechargingId = $recharging->recharging_id ?? 0;
-        $result = $this->robotRepo->getNameNext($rechargingId, $user);
-        if ($result === false) {
-            return response()->json(['message' => 'The last step'], 401);
-        }
-        return $result;
-    }
 //    public function multi(Request $request)
 //    {
 //        $header = $request->header('info-user');
@@ -117,5 +50,26 @@ class LevelUpController extends Controller
 //        return $result ;
 //    }
 
-
+    public function recharging(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $recharging = PlayerRecharging::getPlayerId($user->id);
+        $result = $this->rechargingRepo->getNameNext($recharging->recharging_id , $user);
+        if ( $result === false ) {
+            return response()->json(['message' => 'The last step'],401);
+        }
+        return $result ;
+    }
+    public function robot(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $recharging = PlayerRobot::getPlayerId($user->id);
+        $result = $this->rechargingRepo->getNameNext($recharging->recharging_id , $user);
+        if ( $result === false ) {
+            return response()->json(['message' => 'The last step'],401);
+        }
+        return $result ;
+    }
 }
