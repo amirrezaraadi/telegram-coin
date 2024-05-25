@@ -106,6 +106,6 @@ return [
     |
     */
 
-    'prefix' => '',
+    'prefix' => env('CACHE_PREFIX'),
 
 ];

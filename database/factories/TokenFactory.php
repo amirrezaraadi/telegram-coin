@@ -17,7 +17,8 @@ class TokenFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+                'click' => $this->faker->numberBetween(1 , 9),
+                'player_id' => 1 ,
         ];
     }
 }

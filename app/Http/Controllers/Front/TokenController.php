@@ -17,17 +17,25 @@ class   TokenController extends Controller
 
     public function index(Request $request)
     {
+//        if ($request->header('info-user')) {
+//
+//            $user = $this->userRepo->getIdName($request->header('info-user'));
+//            event(new TokenEvent($request  , $user));
+//            return true ;
+//
+//            $count = Cache::increment($user->uuid_name, $request->click);
+//
+//            $user->t_balance()->update([
+//                'amount' => $count
+//            ]);
+//        }
+
         if ($request->header('info-user')) {
-
             $user = $this->userRepo->getIdName($request->header('info-user'));
-            event(new TokenEvent($request  , $user));
-            return true ;
+//            $clickCount = Cache::increment("user_clicks" . $user->uuid_name , $request->click);
+            event(new TokenEvent($user->id , $clickCount));
 
-            $count = Cache::increment($user->uuid_name, $request->click);
-
-            $user->t_balance()->update([
-                'amount' => $count
-            ]);
+            return response()->json(['clickCount' => $clickCount]);
         }
     }
 

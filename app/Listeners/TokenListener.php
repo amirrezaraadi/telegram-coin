@@ -21,7 +21,6 @@ class TokenListener
      */
     public function handle(TokenEvent $event)
     {
-        dd($event);
         dd( $event->getRequest());
         TokenJob::dispatch(
             $event->getRequest(),

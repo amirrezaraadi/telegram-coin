@@ -14,9 +14,7 @@ return new class extends Migration
             $table->unsignedBigInteger('click');
             $table->timestamp('published_at')->nullable();
             $table->foreignId('player_id')
-                ->constrained('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->constrained('users');
             $table->softDeletes();
             $table->timestamps();
         });
