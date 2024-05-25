@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Manager\Energy;
+use App\Models\Manager\MultipleTouches;
 use App\Models\Manager\Recharging;
 use App\Models\Manager\Trophy;
 use App\Models\Robot;
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
          Trophy::factory(10)->create();
          Token::factory(10)->create();
          Robot::factory(10)->create();
+         MultipleTouches::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

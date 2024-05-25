@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Manager\MultipleTouches;
+use App\Models\Pivot\PlayerMulti;
 
 class multiple_touchesRepo
 {
@@ -51,27 +52,28 @@ class multiple_touchesRepo
 
     public function getNameFirst( $id)
     {
-        return $this->query->where('id' , $id)->select(['title', 'unit'])->first();
+        return $this->query->where('id' , $id)->select(['id' , 'title', 'unit'])->first();
     }
-
+    public function getNameCheck( $id)
+    {
+        return MultipleTouches::query()->where('id' , $id)->select(['id' , 'title', 'unit'])->first();
+    }
     public function getNameNext($id , $user)
     {
         $next = $id + 1;
-        $result = $this->query->where('id', $next)->select(['title', 'unit'])->first();
+        $result = $this->query->where('id', $next)->select(['id' , 'title', 'unit'])->first();
         if ( is_null($result )) {
             return false ;
         }
-
-        dd($user);
         $amount = $user->t_balance->pluck('amount')->first();
         $checkCache = $amount > $result->amount;
         if (! $checkCache) {
             return false;
         }
         $remaining = $amount - $result->amount;
+        $table = PlayerMulti::getPlayerId($user->id);
+        $table->update(['multiple_touche_id' => $result->id]);
         $save_user = $user->t_balance()->update(['amount' => $remaining]);
-        $table = PlayerEnergy::getPlayerId($user->id);
-        $table->update(['energy_id' => $result->id]);
         return $result;
 
 

@@ -41,6 +41,7 @@ class LevelUpController extends Controller
         }
         return $check;
     }
+
     public function recharging(Request $request)
     {
         $header = $request->header('info-user');
@@ -53,18 +54,19 @@ class LevelUpController extends Controller
         }
         return $check;
     }
+
     public function robot(Request $request)
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
         $recharging = PlayerRobot::getPlayerId($user->id);
         $rechargingId = $recharging->robot_id ?? 0;
-        if($rechargingId === 0){
-            $id = $rechargingId + 1 ;
+        if ($rechargingId === 0) {
+            $id = $rechargingId + 1;
         }
-        $id_robot = $rechargingId ?? $id ;
+        $id_robot = $rechargingId ?? $id;
         $result = $this->robotRepo->getFindIdName($id_robot);
-        if (is_null($result )) {
+        if (is_null($result)) {
             return response()->json(['message' => 'The last step'], 401);
         }
         return $result;
@@ -100,7 +102,7 @@ class LevelUpController extends Controller
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
-        $recharging = PlayerRobot::getPlayerId($user->id) ;
+        $recharging = PlayerRobot::getPlayerId($user->id);
         $rechargingId = $recharging->robot_id ?? 0;
         $result = $this->robotRepo->getNameNext($rechargingId, $user);
         if ($result === false) {
@@ -108,17 +110,32 @@ class LevelUpController extends Controller
         }
         return $result;
     }
-//    public function multi(Request $request)
-//    {
-//        $header = $request->header('info-user');
-//        $user = $this->userRepo->getIdName($header);
-//        $multiId = PlayerMulti::getPlayerId($user->id);
-//        $result = $this->multiple_touchesRepo->getNameNext($multiId->multiple_touche_id , $user);
-//        if ( $result === false ) {
-//            return response()->json(['message' => 'The last step'],401);
-//        }
-//        return $result ;
-//    }
 
+    public function multi(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $multiId = PlayerMulti::getPlayerId($user->id);
+        $id = $multiId->multiple_touche_id + 1;
+        $result = $this->multiple_touchesRepo->getNameFirst($id);
 
+        if (is_null($result )) {
+            $check = $this->multiple_touchesRepo->getNameCheck($multiId->multiple_touche_id);
+            return $check;
+        }
+        return $result;
+
+    }
+
+    public function multi_up(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $multiId = PlayerMulti::getPlayerId($user->id);
+        $result = $this->multiple_touchesRepo->getNameNext($multiId->multiple_touche_id, $user);
+        if ($result === false) {
+            return response()->json(['message' => 'The last step'], 401);
+        }
+        return $result;
+    }
 }
