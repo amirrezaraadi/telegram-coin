@@ -17,11 +17,7 @@ class RobotFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title(),
-            'hour' => $this->faker->numberBetween(111,999),
-            'amount' => $this->faker->numberBetween(111,999),
-            'token' => $this->faker->numberBetween(111,999),
-
+            //
         ];
     }
 }

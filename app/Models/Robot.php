@@ -9,11 +9,11 @@ class Robot extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
+    protected $fillable = ['title',
         'hour',
         'amount',
         'token',
+        'player_id'
     ];
 
     public function user()
