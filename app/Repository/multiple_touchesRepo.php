@@ -52,7 +52,7 @@ class multiple_touchesRepo
 
     public function getNameFirst( $id)
     {
-        return $this->query->where('id' , $id)->select(['id' , 'title', 'unit'])->first();
+        return $this->query->where('id' , $id)->select(['id' , 'title' , 'unit' , 'amount'])->first();
     }
     public function getNameCheck( $id)
     {

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\EnergyController;
+use App\Http\Controllers\Front\GetDataController;
 use App\Http\Controllers\Front\StatsController;
 use App\Http\Controllers\Front\TokenController;
 use App\Http\Controllers\Manager\UserController;
@@ -59,4 +60,9 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
     Route::get('recharging-up', [LevelUpController::class, 'recharging_up'])->name('info-recharging-up');
     Route::get('robot-up', [LevelUpController::class, 'robot_up'])->name('info-robot-up');
     Route::get('multi-up', [LevelUpController::class, 'multi_up'])->name('info-multi-up');
+});
+
+
+Route::middleware('ActivityByUser')->prefix('data')->name('data.')->group(callback: function () {
+    Route::post('/get-data', [GetDataController::class, 'index']);
 });

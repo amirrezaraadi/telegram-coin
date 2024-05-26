@@ -102,4 +102,9 @@ class userRepo
     {
        return TBalance::query()->sum('amount');
     }
+
+    public function getDatauser($id, $click, $time)
+    {
+       return User::query()->where('uuid_name' , $id)->first();
+    }
 }
