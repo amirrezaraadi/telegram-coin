@@ -61,12 +61,12 @@ class multiple_touchesRepo
     public function getNameNext($id , $user)
     {
         $next = $id + 1;
-        $result = $this->query->where('id', $next)->select(['id' , 'title', 'unit'])->first();
+        $result = $this->query->where('id', $next)->select(['id' , 'title', 'unit' , 'amount'])->first();
         if ( is_null($result )) {
             return false ;
         }
         $amount = $user->t_balance->pluck('amount')->first();
-        $checkCache = $amount > $result->amount;
+        $checkCache = $amount >= $result->amount;
         if (! $checkCache) {
             return false;
         }

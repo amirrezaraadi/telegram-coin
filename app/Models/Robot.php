@@ -13,7 +13,6 @@ class Robot extends Model
         'hour',
         'amount',
         'token',
-        'player_id'
     ];
 
     public function user()

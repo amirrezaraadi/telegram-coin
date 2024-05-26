@@ -71,7 +71,7 @@ class energyRepo
             return false;
         }
         $amount = $user->t_balance->pluck('amount')->first();
-        $checkCache = $amount > $result->amount;
+        $checkCache = $amount >= $result->amount;
         if (! $checkCache) {
             return false;
         }

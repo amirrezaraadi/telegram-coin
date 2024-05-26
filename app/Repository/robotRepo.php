@@ -67,12 +67,12 @@ class robotRepo
                 'robot_id' => $result->id ,
             ]);
             $save_user = $user->t_balance()->update(['amount' => $remaining]);
-            //TODO
+
             return $result;
         }
         $table->update(['robot_id' => $result->id]);
         $save_user = $user->t_balance()->update(['amount' => $remaining]);
-        //TODO
+
         return $result;
     }
 }

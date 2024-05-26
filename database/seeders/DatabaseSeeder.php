@@ -25,10 +25,5 @@ class DatabaseSeeder extends Seeder
         Trophy::factory(10)->create();
         MultipleTouches::factory(10)->create();
         Robot::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }
