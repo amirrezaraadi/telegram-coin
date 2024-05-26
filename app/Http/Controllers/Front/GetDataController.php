@@ -14,14 +14,12 @@ class GetDataController extends Controller
 
     public function index(Request $request)
     {
-        $datas = $request->json()->all();
-        foreach ($datas as $data) {
-            $user = $this->userRepo->getDatauser($data['id'] , $data['click'] , $data['time']);
-            if(is_null($user)) {
-                return response()->json(['message' => 'not found user'],401);
-            }
-            $user->t_balance()->update(['amount' => $data['click'] , 'publish_at' => date("Y-m-d H:i:s", $data['time'])]);
-
+        $data = $request->json()->all();
+        $user = $this->userRepo->getDatauser($data['id'], $data['click'], $data['time']);
+        if (is_null($user)) {
+            return response()->json(['message' => 'not found user'], 401);
         }
+        $user->t_balance()->update(['amount' => $data['click'], 'publish_at' => date("Y-m-d H:i:s", $data['time'])]);
+        return response()->json(['message' => 'I received it correctly', 'status' => 'success'], 200);
     }
 }
