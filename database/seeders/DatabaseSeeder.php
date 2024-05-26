@@ -19,13 +19,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         User::factory(10)->create();
-         Energy::factory(10)->create();
-         Recharging::factory(10)->create();
-         Trophy::factory(10)->create();
-         Token::factory(10)->create();
-         Robot::factory(10)->create();
-         MultipleTouches::factory(10)->create();
+//        User::factory(1)->create();
+        Energy::factory(10)->create();
+        Recharging::factory(10)->create();
+        Trophy::factory(10)->create();
+        MultipleTouches::factory(10)->create();
+        Robot::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
