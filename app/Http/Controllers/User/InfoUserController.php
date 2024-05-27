@@ -23,7 +23,9 @@ class InfoUserController extends Controller
         public rechargingRepo       $rechargingRepo,
         public multiple_touchesRepo $multiple_touchesRepo)
     {}
-
+    public function all(){
+        return $this->trophyRepo->index() ;
+    }
     public function trophy(Request $request)
     {
         $header = $request->header('info-user');

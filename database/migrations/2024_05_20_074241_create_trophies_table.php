@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->string('amount')->nullable();
             $table->boolean('is_default')->default(0);
-            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -38,6 +38,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
 
 Route::middleware('ActivityByUser')->prefix('landing')->name('landing.')->group(function () {
     Route::get('info-trophy', [InfoUserController::class, 'trophy'])->name('info-trophy');
+    Route::get('all-trophy', [InfoUserController::class, 'all'])->name('all-trophy');
     Route::get('info-energy', [InfoUserController::class, 'energy'])->name('info-energy');
     Route::get('info-multi', [InfoUserController::class, 'multi'])->name('info-multi');
     Route::get('info-t_balance', [InfoUserController::class, 't_balance'])->name('info-t_balance');

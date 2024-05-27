@@ -29,6 +29,7 @@ class GetDataController extends Controller
             'amount' => $data['click'],
             'count_amount' => $sum_count_amount,
             'publish_at' => $publish_t_balance_timestamp]);
+        dd($user->getTrophyUserId);
         $energy_user = $user->getEnergyUserId;
         $recharging_user = $user->getRechargingUserId;
         $last_energy = $data['lastEnergy'];
