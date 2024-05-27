@@ -24,7 +24,6 @@ class StoreEnergyRequest extends FormRequest
         return [
             'title' => ['required' , 'string' , 'min:2' , 'max:200'],
             'size' => ['required' , 'string' , 'min:2' , 'max:200'],
-            'unit' => ['required' , 'string' ,  'max:200'],
             'amount' => ['required' , 'string' , 'min:2' , 'max:200'],
         ];
     }

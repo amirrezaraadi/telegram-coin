@@ -25,10 +25,8 @@ class energyRepo
         return $this->query->create([
             'title' => $data['title'],
             'size' => $data['size'],
-            'unit' => $data['unit'],
             'amount' => $data['amount'],
             'is_default' => 0,
-            'player_id' => 1
         ]);
     }
 
@@ -46,7 +44,6 @@ class energyRepo
         return $this->query->where('id', $id)->update([
             'title' => $data['title'] ?? $energyId->title,
             'size' => $data['size'] ?? $energyId->size,
-            'unit' => $data['unit'] ?? $energyId->unit,
             'amount' => $data['amount'] ?? $energyId->amount,
             'is_default' => $data['is_default'] ?? $energyId->is_default,
             'player_id' => 1
@@ -60,13 +57,13 @@ class energyRepo
 
     public function getNameFirst($id)
     {
-        return $this->query->where('id', $id)->select(['title', 'size', 'unit'])->first();
+        return $this->query->where('id', $id)->select(['title', 'size', 'energyLast'])->first();
     }
 
     public function getNameNext($id, $user)
     {
         $next = $id + 1;
-        $result = $this->query->where('id', $next)->select(['id', 'title', 'size', 'unit', 'amount'])->first();
+        $result = $this->query->where('id', $next)->select(['id', 'title', 'size', 'energyLast', 'amount'])->first();
         if (is_null($result)) {
             return false;
         }

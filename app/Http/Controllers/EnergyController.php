@@ -23,7 +23,6 @@ class EnergyController extends Controller
         $this->energyRepo->create($request->only([
             'title',
             'size',
-            'unit',
             'amount'
         ]));
         return response()->json(['message' => 'create energy success', 'status' => 'success'], 200);
@@ -40,7 +39,6 @@ class EnergyController extends Controller
         $this->energyRepo->update($request->only([
             'title',
             'size',
-            'unit',
             'amount'
         ]), $energy);
         return response()->json(['message' => 'update energy success', 'status' => 'success'], 200);

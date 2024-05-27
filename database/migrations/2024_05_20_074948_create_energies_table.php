@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('size')->nullable();
-            $table->string('unit')->nullable();
+            $table->string('energyLast')->default(0)->nullable();
             $table->string('amount')->nullable();
             $table->boolean('is_default')->default(0);
             $table->timestamp('publish_at')->nullable();
