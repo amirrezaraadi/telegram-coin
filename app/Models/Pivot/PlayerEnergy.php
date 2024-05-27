@@ -11,7 +11,7 @@ class PlayerEnergy extends Pivot
     /*
      * Relationships
      */
-    protected $fillable = ['player_id', 'energy_id', 'energyLast' ];
+    protected $fillable = ['player_id', 'energy_id', 'energyLast' , 'energy_time' ];
 
     public static function getPlayerId($id)
     {

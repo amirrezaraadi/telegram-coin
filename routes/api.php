@@ -67,4 +67,5 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
 Route::middleware('ActivityByUser')->prefix('data')->name('data.')->group(callback: function () {
     Route::post('/get-data', [GetDataController::class, 'index']);
     Route::get('/get-data', [GetDataController::class, 'get_data']);
+    Route::get('/get-test', [GetDataController::class, 'test']);
 });
