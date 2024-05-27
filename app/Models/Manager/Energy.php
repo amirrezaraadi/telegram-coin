@@ -17,7 +17,6 @@ class Energy extends Model
     protected $fillable = [
         'title',
         'size',
-        'energyLast',
         'amount',
         'is_default',
     ];

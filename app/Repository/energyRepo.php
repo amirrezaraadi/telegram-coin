@@ -46,7 +46,6 @@ class energyRepo
             'size' => $data['size'] ?? $energyId->size,
             'amount' => $data['amount'] ?? $energyId->amount,
             'is_default' => $data['is_default'] ?? $energyId->is_default,
-            'player_id' => 1
         ]);
     }
 
@@ -57,13 +56,13 @@ class energyRepo
 
     public function getNameFirst($id)
     {
-        return $this->query->where('id', $id)->select(['title', 'size', 'energyLast'])->first();
+        return $this->query->where('id', $id)->select(['title', 'size'])->first();
     }
 
     public function getNameNext($id, $user)
     {
         $next = $id + 1;
-        $result = $this->query->where('id', $next)->select(['id', 'title', 'size', 'energyLast', 'amount'])->first();
+        $result = $this->query->where('id', $next)->select(['id', 'title', 'size', 'amount'])->first();
         if (is_null($result)) {
             return false;
         }
