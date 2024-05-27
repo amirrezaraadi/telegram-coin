@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('trophies', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->string('amount')->nullable();
             $table->boolean('is_default')->default(0);
             $table->softDeletes();
             $table->timestamps();

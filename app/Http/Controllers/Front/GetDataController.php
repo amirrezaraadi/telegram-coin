@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Pivot\PlayerEnergy;
 use App\Repository\userRepo;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 
 class GetDataController extends Controller
@@ -16,21 +18,21 @@ class GetDataController extends Controller
     public function index(Request $request)
     {
         $data = $request->json()->all();
-
-        $user = $this->userRepo->getDatauser($data['id'], $data['click'], $data['time']);
+        $user = $this->userRepo->getDatauser($data['id']);
         if (is_null($user)) {
             return response()->json(['message' => 'not found user'], 401);
         }
         $publish_t_balance_timestamp = date("Y-m-d H:i:s", $data['time']);
         $user->t_balance()->update(['amount' => $data['click'], 'publish_at' => $publish_t_balance_timestamp]);
-
-        $publish_estimate_refill_timestamp = date("H:i:s", $data['estimateRefill']);
-
-        $energy = $user->getEnergyUserId;
-        $recharging = $user->getRechargingUserId ;
+        $energy_user = $user->getEnergyUserId;
+        $recharging_user = $user->getRechargingUserId;
         $last_energy = $data['lastEnergy'];
-
-
-        return response()->json(['message' => 'I received it correctly', 'status' => 'success'], 200);
+        $energy = $last_energy * $recharging_user->unit  ; // return  15
+        $estimate_refill_timestamp = Carbon::createFromTimestamp($data['energy_time']);
+        $time_now = Carbon::now()->timestamp;
+        $seconds_diff = $time_now - $estimate_refill_timestamp->timestamp;
+        $timestamp_full = $recharging_user->unit * $seconds_diff + $energy ;
+        $res = min($energy_user->size, $timestamp_full);
+        return response()->json(['res' => $res, 'status' => 'success'], 200);
     }
 }

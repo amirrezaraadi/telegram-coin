@@ -17,7 +17,8 @@ class TrophyFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title
+            'title' => $this->faker->title,
+            'amount' => $this->faker->numberBetween(111 , 999),
         ];
     }
 }
