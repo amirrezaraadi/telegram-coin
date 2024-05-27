@@ -12,7 +12,7 @@ class TBalance extends Model
 {
     use HasFactory , SoftDeletes;
 
-    protected $fillable = ['amount', 'publish_at' ];
+    protected $fillable = ['amount', 'count_amount', 'publish_at' ];
 
     protected $casts = [
         'publish_at' => 'timestamp'

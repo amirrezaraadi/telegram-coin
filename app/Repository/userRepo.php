@@ -74,7 +74,7 @@ class userRepo
     public function getConeUserId($uuId)
     {
         $userId = $this->getIdName($uuId);
-        return $userId->t_balance->pluck('amount')->first();
+        return $userId->t_balance->pluck('count_amount')->first();
     }
 
     public function last_seen($uuId)
@@ -103,7 +103,7 @@ class userRepo
        return TBalance::query()->sum('amount');
     }
 
-    public function getDatauser($id, $click, $time)
+    public function getDatauser($id)
     {
        return User::query()->where('uuid_name' , $id)->first();
     }

@@ -29,7 +29,7 @@ class RegisterController extends Controller
         $user = resolve(userRepo::class)->getIdName($int);
         if (is_null($user)) {
             $save = resolve(userRepo::class)->create($int);
-            $save->t_balance()->create(['amount' => 0]);
+            $save->t_balance()->create(['amount' => 0 , 'count_amount' => 0]);
             $trophyRepo = $this->trophyRepo->getFindId(1);
             $energy = $this->energyRepo->getFindId(1);
             $recharging = $this->rechargingRepo->getFindId(1);

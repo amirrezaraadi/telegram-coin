@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('t_balances', function (Blueprint $table) {
             $table->id();
             $table->string('amount')->default(0);
+            $table->string('count_amount')->default(0);
             $table->timestamp('publish_at')->nullable();
             $table->foreignId('player_id')
                 ->constrained('users')
