@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Manager\Energy;
 use App\Models\Pivot\PlayerEnergy;
 use App\Repository\userRepo;
 use Carbon\Carbon;
@@ -29,7 +30,7 @@ class GetDataController extends Controller
             'amount' => $data['click'],
             'count_amount' => $sum_count_amount,
             'publish_at' => $publish_t_balance_timestamp]);
-        dd($user->getTrophyUserId);
+
         $energy_user = $user->getEnergyUserId;
         $recharging_user = $user->getRechargingUserId;
         $last_energy = $data['lastEnergy'];
@@ -40,5 +41,17 @@ class GetDataController extends Controller
         $timestamp_full = $recharging_user->unit * $seconds_diff + $energy;
         $res = min($energy_user->size, $timestamp_full);
         return response()->json(['res' => $res, 'status' => 'success'], 200);
+    }
+
+    public function get_data(Request $request)
+    {
+        if($request->header('info-user')) {
+            $userId = $request->header('info-user');
+            $user = $this->userRepo->getIdName($userId);
+            $energy = PlayerEnergy::getPlayerId($user->id);
+            return  Energy::query()->where('id' , $energy->energy_id)->select('energyLast')->first();
+
+        }
+
     }
 }

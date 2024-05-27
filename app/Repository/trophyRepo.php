@@ -15,7 +15,7 @@ class trophyRepo
 
     public function index()
     {
-        return $this->query->with('soft_delete')->paginate();
+        return $this->query->paginate();
     }
 
     public function create($data)
