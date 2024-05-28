@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('body')->nullable();
             $table->string('link')->nullable();
             $table->string('amount')->nullable();
+            $table->boolean('is_default')->default(0);
             $table->timestamps();
         });
     }
