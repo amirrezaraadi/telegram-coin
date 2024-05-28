@@ -26,7 +26,7 @@ Route::middleware('ActivityByUser')->prefix('manager')->name('manager')->group(c
     Route::apiResource('/multi_touch', MultipleTouchesController::class);
     Route::apiResource('/t_balance', TBalanceController::class);
     Route::apiResource('/robot', \App\Http\Controllers\RobotController::class);
-//    Route::apiResource('energy-up' , EnergyUpController::class);
+    Route::apiResource('tasks', TaskController::class);
 });
 Route::prefix('status')->name('status')->group(function () {
     Route::put('/trophies/{trophy}', [TrophyController::class, 'default'])->name('default');
@@ -73,7 +73,5 @@ Route::middleware('ActivityByUser')->prefix('data')->name('data.')->group(callba
 
 
 Route::middleware('ActivityByUser')->prefix('tasks')->name('tasks.')->group(callback: function () {
-
-    Route::apiResource('admin', TaskController::class);
 
 });
