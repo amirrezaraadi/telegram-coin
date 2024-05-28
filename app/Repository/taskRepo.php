@@ -10,4 +10,14 @@ class taskRepo
     {
         return Task::query()->paginate();
     }
+
+    public function create($data)
+    {
+        return Task::query()->create([
+            'title' => $data['title'],
+            'body' => $data['body'],
+            'link' => $data['link'],
+            'amount' => $data['amount'],
+        ]);
+    }
 }

@@ -18,9 +18,10 @@ class TaskController extends Controller
         return $this->taskRepo->index();
     }
 
-    public function store(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request): \Illuminate\Http\JsonResponse
     {
-        dd($request->all());
+        $this->taskRepo->create($request->only('title' , 'body' , 'amount' , 'link'));
+        return response()->json(['message' => 'success create task' , 'status' => 'success'],200);
     }
 
 
