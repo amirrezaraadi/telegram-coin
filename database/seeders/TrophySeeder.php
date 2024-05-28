@@ -14,9 +14,9 @@ class TrophySeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ["title" => 'wood', "amount" => 0],
+            ["title" => 'Wood', "amount" => 0],
             ["title" => 'Bronze', "amount" => 500],
-            ["title" => 'silver', "amount" => 10000],
+            ["title" => 'Silver', "amount" => 10000],
             ["title" => 'Gold', "amount" => 50000],
             ["title" => 'Platinum', "amount" => 100000],
             ["title" => 'Diamond', "amount" => 200000],
