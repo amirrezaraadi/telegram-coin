@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
            MultipleTouchesSeeder::class ,
            RechargingSeeder::class ,
            TrophySeeder::class ,
+           TaskSeeder::class ,
         ]);
     }
 }
