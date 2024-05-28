@@ -18,7 +18,6 @@ class TrophySeeder extends Seeder
             ["title" => 'Bronze', "amount" => 500],
             ["title" => 'silver', "amount" => 10000],
             ["title" => 'Gold', "amount" => 50000],
-            ["title" => 'Titan', "amount" => 400],
             ["title" => 'Platinum', "amount" => 100000],
             ["title" => 'Diamond', "amount" => 200000],
         ];
