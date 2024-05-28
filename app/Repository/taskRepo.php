@@ -20,4 +20,9 @@ class taskRepo
             'amount' => $data['amount'],
         ]);
     }
+
+    public function getFindId($task)
+    {
+        return Task::query()->findOrFail($task);
+    }
 }
