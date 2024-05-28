@@ -14,11 +14,13 @@ class TrophySeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ["title" => 'Rice', "amount" => 100],
-            ["title" => 'Bronze', "amount" => 200],
-            ["title" => 'silver', "amount" => 300],
-            ["title" => 'Gold', "amount" => 400],
+            ["title" => 'wood', "amount" => 0],
+            ["title" => 'Bronze', "amount" => 500],
+            ["title" => 'silver', "amount" => 10000],
+            ["title" => 'Gold', "amount" => 50000],
             ["title" => 'Titan', "amount" => 400],
+            ["title" => 'Platinum', "amount" => 100000],
+            ["title" => 'Diamond', "amount" => 200000],
         ];
 
         foreach ($data as $item) {
