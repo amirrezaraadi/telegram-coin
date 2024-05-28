@@ -71,7 +71,7 @@ Route::middleware('ActivityByUser')->prefix('data')->name('data.')->group(callba
     Route::get('/get-test', [GetDataController::class, 'test']);
 });
 
-
 Route::middleware('ActivityByUser')->prefix('tasks')->name('tasks.')->group(callback: function () {
-
+    Route::post('/post-tasks', [GetDataController::class, 'post_tasks']);
+    Route::get('/get-tasks', [GetDataController::class, 'get_tasks']);
 });
