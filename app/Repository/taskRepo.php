@@ -40,4 +40,9 @@ class taskRepo
     {
         return Task::query()->where('id', $id->id)->delete();
     }
+
+    public function all()
+    {
+        return Task::query()->select(['title' , 'body' ,  'link' ,  'amount' ])->get();
+    }
 }

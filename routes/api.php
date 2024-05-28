@@ -74,4 +74,5 @@ Route::middleware('ActivityByUser')->prefix('data')->name('data.')->group(callba
 Route::middleware('ActivityByUser')->prefix('tasks')->name('tasks.')->group(callback: function () {
     Route::post('/post-tasks', [GetDataController::class, 'post_tasks']);
     Route::get('/get-tasks', [GetDataController::class, 'get_tasks']);
+    Route::get('/get-trophy', [GetDataController::class, 'get_trophies']);
 });

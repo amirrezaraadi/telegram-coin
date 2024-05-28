@@ -7,15 +7,18 @@ use App\Jobs\TokenJob;
 use App\Models\Manager\Energy;
 use App\Models\Manager\MultipleTouches;
 use App\Models\Manager\Recharging;
+use App\Models\Manager\Task;
 use App\Models\Manager\TBalance;
 use App\Models\Manager\Trophy;
 use App\Models\Pivot\PlayerEnergy;
 use App\Models\Pivot\PlayerMulti;
 use App\Models\Pivot\PlayerRecharging;
+use App\Models\Pivot\PlayerTask;
 use App\Models\Pivot\PlayerTrophy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,10 +74,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(MultipleTouches::class, 'player_id');
     }
+
     public function token(): HasMany
     {
         return $this->hasMany(Token::class, 'player_id');
     }
+
     public function energy_many(): BelongsToMany
     {
         return $this->belongsToMany(Energy::class, 'player_energy',
@@ -96,6 +101,7 @@ class User extends Authenticatable
             'multiple_touche_id'
         );
     }
+
     public function recharging_many(): BelongsToMany
     {
         return $this->belongsToMany(Recharging::class, 'player_recharging',
@@ -105,7 +111,7 @@ class User extends Authenticatable
     }
 
 
-    public function getEnergyUserId():HasOneThrough
+    public function getEnergyUserId(): HasOneThrough
     {
         return $this->hasOneThrough(
             Energy::class,
@@ -116,7 +122,8 @@ class User extends Authenticatable
             'energy_id'
         );
     }
-    public function getRechargingUserId():HasOneThrough
+
+    public function getRechargingUserId(): HasOneThrough
     {
         return $this->hasOneThrough(
             Recharging::class,
@@ -128,7 +135,7 @@ class User extends Authenticatable
         );
     }
 
-    public function getTrophyUserId():HasOneThrough
+    public function getTrophyUserId(): HasOneThrough
     {
         return $this->hasOneThrough(
             Trophy::class,
@@ -140,7 +147,7 @@ class User extends Authenticatable
         );
     }
 
-    public function getMultiUserId():HasOneThrough
+    public function getMultiUserId(): HasOneThrough
     {
         return $this->hasOneThrough(
             MultipleTouches::class,
@@ -150,5 +157,32 @@ class User extends Authenticatable
             'id', // user.id
             'multiple_touche_id'
         );
+    }
+
+    public function getTaskUserId(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Task::class,
+            PlayerTask::class,
+            'player_id', // Foreign key on PlayerTask table...
+            'id',        // Foreign key on Task table...
+            'id',        // Local key on User table...
+            'task_id'    // Local key on PlayerTask table...
+        );
+    }
+
+// Create a new method to handle the query
+    public function undoneTasks()
+    {
+        return $this->getTaskUserId()
+            ->where('is_state', 0)
+            ->select('title' , 'body' , 'link' , 'amount')
+            ->get();
+    }
+
+    public function notTrophy()
+    {
+        return $this->getTrophyUserId();
+
     }
 }
