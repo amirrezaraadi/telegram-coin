@@ -25,4 +25,19 @@ class taskRepo
     {
         return Task::query()->findOrFail($task);
     }
+
+    public function update($data, $id)
+    {
+        return Task::query()->where('id', $id->id)->update([
+            'title' => $data['title'] ?? $id->title,
+            'body' => $data['body'] ?? $id->body,
+            'link' => $data['link'] ?? $id->link,
+            'amount' => $data['amount'] ?? $id->amount,
+        ]);
+    }
+
+    public function delete($id)
+    {
+        return Task::query()->where('id', $id->id)->delete();
+    }
 }

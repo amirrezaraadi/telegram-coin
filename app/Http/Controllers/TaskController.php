@@ -33,12 +33,16 @@ class TaskController extends Controller
 
     public function update(UpdateTaskRequest $request, $task)
     {
-        //
+        $task = $this->taskRepo->getFindId($task);
+        $this->taskRepo->update($request->only('title', 'body', 'amount', 'link') , $task);
+        return response()->json(['message' => 'success update task', 'status' => 'success'], 200);
     }
 
 
     public function destroy($task)
     {
-        //
+        $task = $this->taskRepo->getFindId($task);
+        $this->taskRepo->delete($task);
+        return response()->json(['message' => 'success delete task', 'status' => 'success'], 200);
     }
 }
