@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\TokenController;
 use App\Http\Controllers\Manager\UserController;
 use App\Http\Controllers\MultipleTouchesController;
 use App\Http\Controllers\RechargingController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TBalanceController;
 use App\Http\Controllers\TrophyController;
 use App\Http\Controllers\User\InfoUserController;
@@ -68,4 +69,11 @@ Route::middleware('ActivityByUser')->prefix('data')->name('data.')->group(callba
     Route::post('/get-data', [GetDataController::class, 'index']);
     Route::get('/get-data', [GetDataController::class, 'get_data']);
     Route::get('/get-test', [GetDataController::class, 'test']);
+});
+
+
+Route::middleware('ActivityByUser')->prefix('tasks')->name('tasks.')->group(callback: function () {
+
+    Route::apiResource('admin', TaskController::class);
+
 });
