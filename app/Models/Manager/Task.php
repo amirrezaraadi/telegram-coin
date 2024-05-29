@@ -18,6 +18,7 @@ class Task extends Model
         'link',
         'amount',
         'is_default',
+        'parent'
     ];
     protected $hidden = [
         'laravel_through_key'

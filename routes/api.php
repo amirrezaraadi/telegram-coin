@@ -56,6 +56,7 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
     Route::get('recharging', [LevelUpController::class, 'recharging'])->name('info-recharging');
     Route::get('robot', [LevelUpController::class, 'robot'])->name('info-robot');
     Route::get('robot', [LevelUpController::class, 'robot'])->name('info-robot');
+    Route::get('trophy', [LevelUpController::class, 'trophy'])->name('info-trophy');
 
     Route::get('energy-up', [LevelUpController::class, 'energy_up'])->name('info-energy-up');
     Route::get('multi-up', [LevelUpController::class, 'multi_up'])->name('info-multi-up');
@@ -63,7 +64,7 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
     Route::get('robot-up', [LevelUpController::class, 'robot_up'])->name('info-robot-up');
     Route::get('multi-up', [LevelUpController::class, 'multi_up'])->name('info-multi-up');
 
-    Route::get('trophy', [LevelUpController::class, 'trophy'])->name('trophy');
+    Route::get('trophy-up', [LevelUpController::class, 'trophy_up'])->name('trophy');
 
 });
 

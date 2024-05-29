@@ -18,6 +18,11 @@ return new class extends Migration
             $table->string('link')->nullable();
             $table->string('amount')->nullable();
             $table->boolean('is_default')->default(0);
+            $table->foreignId('parent')
+                ->nullable()
+                ->constrained('tasks')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }
