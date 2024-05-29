@@ -139,13 +139,29 @@ class LevelUpController extends Controller
         return $result;
     }
 
-    public function trophy(Request $request): int
+
+
+    public function trophy(Request $request)
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
-        $json_data = $request->json()->get('id');
-        return PlayerTrophy::query()
-            ->where('player_id' , $user->id)
-            ->update(['trophy_id' => $json_data]);
+
+        $trophies = PlayerTrophy::getPlayerId($user->id);
+        $id = $trophies->trophy_id + 1;
+        $check = $this->trophyRepo->getFindIdName($id);
+        if (is_null($check)) {
+            return response()->json(['message' => 'The last step'], 401);
+        }
+        return $check;
+    }
+    public function trophy_up(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $result = $this->trophyRepo->getNameNext($user->getTrophyUserId->id , $user);
+        if ($result === false) {
+            return response()->json(['message' => 'The last step'], 401);
+        }
+        return $result;
     }
 }

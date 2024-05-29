@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Manager\Trophy;
+use App\Models\Pivot\PlayerTrophy;
 
 class trophyRepo
 {
@@ -57,5 +58,31 @@ class trophyRepo
     public function getNameFirst($id)
     {
         return $this->query->where('id' , $id)->selectRaw('title')->first();
+    }
+
+    public function getNameNext( $id, $user)
+    {
+        $next = $id + 1;
+        $result = $this->query->where('id', $next)->select(['id' , 'title', 'amount'])->first();
+        if ( is_null($result )) {
+            return false ;
+        }
+        $amount = $user->t_balance->pluck('amount')->first();
+
+        $checkCache = $amount >= $result->amount;
+        if (! $checkCache) {
+            return false;
+        }
+        $remaining = $amount - $result->amount;
+
+        $table = PlayerTrophy::getPlayerId($user->id);
+        $table->update(['trophy_id' => $result->id]);
+        $save_user = $user->t_balance()->update(['amount' => $remaining]);
+        return $result;
+    }
+
+    public function getFindIdName( $id)
+    {
+        return $this->query->where('id', $id)->select(['title' , 'amount'])->first();
     }
 }

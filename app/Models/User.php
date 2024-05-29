@@ -65,6 +65,10 @@ class User extends Authenticatable
 
         static::created(function ($user) {
             $user->t_balance()->create(['amount' => 0, 'count_amount' => 0]);
+            $user->energy_many()->attach(1);
+            $user->trophy_many()->attach(1);
+            $user->recharging_many()->attach(1);
+            $user->multi_touche_many()->attach(1);
         });
     }
 
