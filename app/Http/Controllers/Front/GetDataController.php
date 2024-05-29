@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manager\Energy;
+use App\Models\Manager\Trophy;
 use App\Models\Pivot\PlayerEnergy;
 use App\Models\Pivot\PlayerTask;
 use App\Repository\taskRepo;
@@ -43,8 +44,11 @@ class GetDataController extends Controller
     {
         if ($request->header('info-user')) {
             $user = $this->userRepo->getIdName($request->header('info-user'));
-            return  $user->notTrophy ;
-
+            $check_id_trophy = $user->getTrophyUserId;
+            return  Trophy::query()
+                ->where('id' , '>' , $check_id_trophy->id)
+                ->select(['title' , 'amount'])
+                ->get();
         }
     }
 }

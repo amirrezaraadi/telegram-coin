@@ -180,9 +180,5 @@ class User extends Authenticatable
             ->get();
     }
 
-    public function notTrophy()
-    {
-        return $this->getTrophyUserId();
 
-    }
 }

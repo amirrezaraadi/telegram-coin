@@ -62,6 +62,9 @@ Route::middleware('ActivityByUser')->prefix('level-up')->name('up.')->group(func
     Route::get('recharging-up', [LevelUpController::class, 'recharging_up'])->name('info-recharging-up');
     Route::get('robot-up', [LevelUpController::class, 'robot_up'])->name('info-robot-up');
     Route::get('multi-up', [LevelUpController::class, 'multi_up'])->name('info-multi-up');
+
+    Route::get('trophy', [LevelUpController::class, 'trophy'])->name('trophy');
+
 });
 
 
