@@ -56,7 +56,6 @@ class RegisterController extends Controller
         $user = resolve(userRepo::class)->getIdName($int);
         if (is_null($user)) {
             $save = resolve(userRepo::class)->create($int);
-            $save->t_balance()->create(['amount' => 0, 'count_amount' => 0]);
             $trophyRepo = $this->trophyRepo->getFindId(1);
             $energy = $this->energyRepo->getFindId(1);
             $recharging = $this->rechargingRepo->getFindId(1);
@@ -67,20 +66,24 @@ class RegisterController extends Controller
             $save->multi_touche_many()->attach($multiple_touches->id);
             $level_up = PlayerMulti::query()->where('player_id', $save->id)->first();
             $level = $this->multiple_touchesRepo->getNameCheck($level_up->multiple_touche_id);
-            $tasks = $this->taskRepo->getAllId();
-            foreach ($tasks as $task) {
-
-                PlayerTask::query()->create([
-                    'player_id' => $save->id,
-                    'task_id' => $task->id,
-                ]);
-            }
+            $this->syncTaskBeUser($save->id);
             return response()->json(['user' => $save, 'level' => $level, 'status' => 'create new player '], 200);
         }
 
         $level_up = PlayerMulti::query()->where('player_id', $user->id)->first();
         $level = $this->multiple_touchesRepo->getNameCheck($level_up->multiple_touche_id);
         return response()->json(['user' => $user, 'level' => $level, 'status' => 'create new player '], 200);
+    }
+
+    public function syncTaskBeUser($id)
+    {
+        $tasks = $this->taskRepo->getAllId();
+        foreach ($tasks as $task) {
+            PlayerTask::query()->create([
+                'player_id' => $id,
+                'task_id' => $task->id,
+            ]);
+        }
     }
 
 }
