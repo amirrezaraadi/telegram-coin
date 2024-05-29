@@ -21,15 +21,12 @@ class GetDataController extends Controller
     }
 
 
-
     public function get_tasks(Request $request)
     {
         if ($request->header('info-user')) {
             $user = $this->userRepo->getIdName($request->header('info-user'));
             return $user->undoneTasks();
         }
-
-//        return $this->taskRepo->customize();
     }
 
     public function post_tasks(Request $request)
@@ -37,7 +34,7 @@ class GetDataController extends Controller
         if ($request->header('info-user')) {
             $user = $this->userRepo->getIdName($request->header('info-user'));
             $data_task_id = $request->json()->get('task_id');
-            $task = PlayerTask::query()->where('task_id' , $data_task_id)->first();
+            $task = PlayerTask::query()->where('task_id', $data_task_id)->first();
             return $task->update(['is_state' => 1]);
         }
     }
@@ -47,9 +44,9 @@ class GetDataController extends Controller
         if ($request->header('info-user')) {
             $user = $this->userRepo->getIdName($request->header('info-user'));
             $check_id_trophy = $user->getTrophyUserId;
-            return  Trophy::query()
-                ->where('id' , '>' , $check_id_trophy->id)
-                ->select(['title' , 'amount'])
+            return Trophy::query()
+                ->where('id', '>', $check_id_trophy->id)
+                ->select(['title', 'amount'])
                 ->get();
         }
     }

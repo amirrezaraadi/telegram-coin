@@ -59,16 +59,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(TBalance::class, 'player_id');
     }
-//
-//    public function energy(): HasMany
-//    {
-//        return $this->hasMany(Energy::class, 'player_id');
-//    }
-//
-//    public function trophy(): HasMany
-//    {
-//        return $this->hasMany(Trophy::class, 'player_id');
-//    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->t_balance()->create(['amount' => 0, 'count_amount' => 0]);
+        });
+    }
 
     public function multi_touche(): HasMany
     {
