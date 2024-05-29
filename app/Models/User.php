@@ -176,9 +176,14 @@ class User extends Authenticatable
     {
         return $this->getTaskUserId()
             ->where('is_state', 0)
-            ->select('title' , 'body' , 'link' , 'amount')
+            ->select(['title' , 'body' , 'link' , 'amount'])
             ->get();
     }
-
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'task_user', 'player_id', 'task_id')
+            ->withPivot('confirmation', 'is_state')
+            ->withTimestamps();
+    }
 
 }

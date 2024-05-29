@@ -100,7 +100,7 @@ class userRepo
 
     public function getTotalTouch()
     {
-       return TBalance::query()->sum('amount');
+       return TBalance::query()->sum('count_amount');
     }
 
     public function getDatauser($id)

@@ -14,7 +14,6 @@ use App\Repository\rechargingRepo;
 use App\Repository\robotRepo;
 use App\Repository\trophyRepo;
 use App\Repository\userRepo;
-use http\Env\Response;
 use Illuminate\Http\Request;
 
 class LevelUpController extends Controller
@@ -140,7 +139,7 @@ class LevelUpController extends Controller
         return $result;
     }
 
-    public function trophy(Request $request)
+    public function trophy(Request $request): int
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);

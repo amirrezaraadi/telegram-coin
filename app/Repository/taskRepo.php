@@ -45,4 +45,13 @@ class taskRepo
     {
         return Task::query()->select(['title' , 'body' ,  'link' ,  'amount' ])->get();
     }
+
+    public function customize()
+    {
+        return Task::query()->select(['title' , 'body' ,  'link' ,  'amount' ])->get();
+    }
+    public function getAllId()
+    {
+        return Task::query()->select(['id'  ])->get();
+    }
 }
