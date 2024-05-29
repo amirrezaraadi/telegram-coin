@@ -7,6 +7,7 @@ use App\Models\Pivot\PlayerEnergy;
 use App\Models\Pivot\PlayerMulti;
 use App\Models\Pivot\PlayerRecharging;
 use App\Models\Pivot\PlayerRobot;
+use App\Models\Pivot\PlayerTrophy;
 use App\Repository\energyRepo;
 use App\Repository\multiple_touchesRepo;
 use App\Repository\rechargingRepo;
@@ -137,5 +138,15 @@ class LevelUpController extends Controller
             return response()->json(['message' => 'The last step'], 401);
         }
         return $result;
+    }
+
+    public function trophy(Request $request)
+    {
+        $header = $request->header('info-user');
+        $user = $this->userRepo->getIdName($header);
+        $json_data = $request->json()->get('id');
+        return PlayerTrophy::query()
+            ->where('player_id' , $user->id)
+            ->update(['trophy_id' => $json_data]);
     }
 }
