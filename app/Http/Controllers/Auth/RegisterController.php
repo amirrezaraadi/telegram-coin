@@ -80,7 +80,7 @@ class RegisterController extends Controller
                     'userNextTrophy' => $data['userNextTrophy'],
                     'userTotalBalance' => $data['userTotalBalance'],
                 ];
-            return $save;
+            return response()->json(['user' => $save, 'status' => 'create new player '], 200);
         }
         $data = $this->getUserCustom($user);
         $user ['upgrade'] =
@@ -108,7 +108,10 @@ class RegisterController extends Controller
     public function getUserCustom($save)
     {
         $id = 1;
+
         $energyLimit = PlayerEnergy::query()->where('id', $save->id)->first();
+        $upgrade_energy = Energy::query()->where('id', $energyLimit->energy_id)->first()->size ?? null;
+        $energyLimit->update(['energyLast' => $upgrade_energy]);
         $upgrade_energyLimit = Energy::query()->where('id', ($energyLimit->energy_id + $id))->first()->amount ?? null;
 
 
