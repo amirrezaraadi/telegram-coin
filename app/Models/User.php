@@ -46,6 +46,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'updated_at',
+        'created_at',
+        'email_verified_at',
+        'email',
+        'phone',
+        'wallet',
     ];
 
     protected $casts = [
@@ -59,6 +65,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(TBalance::class, 'player_id');
     }
+
     protected static function boot()
     {
         parent::boot();
@@ -94,6 +101,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Trophy::class, 'player_trophy',
             'player_id',
             'trophy_id');
+    }
+
+    public function trophy(): BelongsToMany
+    {
+        return $this->belongsToMany(Trophy::class);
     }
 
     public function multi_touche_many(): BelongsToMany
@@ -178,9 +190,10 @@ class User extends Authenticatable
     {
         return $this->getTaskUserId()
             ->where('is_state', 0)
-            ->select(['title' , 'body' , 'link' , 'amount'])
+            ->select(['title', 'body', 'link', 'amount'])
             ->get();
     }
+
     public function tasks()
     {
         return $this->belongsToMany(Task::class, 'task_user', 'player_id', 'task_id')
