@@ -56,7 +56,7 @@ class userRepo
 
     public function getIdName($nameId)
     {
-        return $this->query->where('uuid_name', $nameId)->first();
+        return $this->query->where('uuid_name', $nameId)->select(['id' , 'uuid_name'])->first();
     }
 
     public function add_wallet($data, $id)

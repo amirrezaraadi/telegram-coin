@@ -34,6 +34,7 @@ Route::prefix('status')->name('status')->group(function () {
 
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::get('login-register/{int}', [RegisterController::class, 'auth'])->name('login-register');
+    Route::get('auth_auth/{int}', [RegisterController::class, 'auth_auth'])->name('auth_auth');
 });
 
 

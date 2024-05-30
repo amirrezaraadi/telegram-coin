@@ -53,18 +53,20 @@ class User extends Authenticatable
         'phone',
         'wallet',
     ];
-
+    protected $appends = [
+        'UserMultiTap',
+        'user_trophies',
+        'user_energy_limit',
+        'user_balance',
+        'UserEnergySpeed',
+        'UserCurrentEnergy',
+    ];
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_seen' => 'datetime',
         'password' => 'hashed',
 
     ];
-
-    public function t_balance(): HasMany
-    {
-        return $this->hasMany(TBalance::class, 'player_id');
-    }
 
     protected static function boot()
     {
@@ -77,6 +79,16 @@ class User extends Authenticatable
             $user->recharging_many()->attach(1);
             $user->multi_touche_many()->attach(1);
         });
+    }
+
+    public function t_balance(): HasMany
+    {
+        return $this->hasMany(TBalance::class, 'player_id');
+    }
+
+    public function getUserBalanceAttribute()
+    {
+        return $this->t_balance()->first()->amount ?? null;
     }
 
     public function multi_touche(): HasMany
@@ -137,6 +149,24 @@ class User extends Authenticatable
         );
     }
 
+
+    public function getUserEnergyLimitAttribute()
+    {
+        return $this->getEnergyUserId()->first()->size ?? null;
+    }
+
+    public function getUserEnergySpeedAttribute()
+    {
+        return $this->getRechargingUserId()->first()->unit ?? null;
+
+    }
+
+    public function getUserCurrentEnergyAttribute()
+    {
+        return PlayerEnergy::query()->where('player_id', $this->id)->first()->energyLast ?? null;
+    }
+
+
     public function getRechargingUserId(): HasOneThrough
     {
         return $this->hasOneThrough(
@@ -149,7 +179,7 @@ class User extends Authenticatable
         );
     }
 
-    public function getTrophyUserId(): HasOneThrough
+    public function getٍUserTrophyId(): HasOneThrough
     {
         return $this->hasOneThrough(
             Trophy::class,
@@ -159,6 +189,11 @@ class User extends Authenticatable
             'id', // user.id
             'trophy_id'
         );
+    }
+
+    public function getUserTrophiesAttribute()
+    {
+        return $this->getٍUserTrophyId()->first()->title ?? null;
     }
 
     public function getMultiUserId(): HasOneThrough
@@ -171,6 +206,18 @@ class User extends Authenticatable
             'id', // user.id
             'multiple_touche_id'
         );
+    }
+
+    public function getUserMultiTapAttribute()
+    {
+        return $this->getMultiUserId()->first()->title ?? null;
+    }
+
+    public function undoneMultiUserId()
+    {
+        return $this->getMultiUserId()
+            ->select(['title'])
+            ->get();
     }
 
     public function getTaskUserId(): HasManyThrough
@@ -200,5 +247,7 @@ class User extends Authenticatable
             ->withPivot('confirmation', 'is_state')
             ->withTimestamps();
     }
+
+
 
 }
