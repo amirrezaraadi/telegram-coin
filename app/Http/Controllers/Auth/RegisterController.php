@@ -62,9 +62,11 @@ class RegisterController extends Controller
             return response()->json(['user' => $save, 'level' => $level, 'status' => 'create new player '], 200);
         }
 
-        $level_up = PlayerMulti::query()->where('player_id', $user->id)->first();
-        $level = $this->multiple_touchesRepo->getNameCheck($level_up->multiple_touche_id);
-        return response()->json(['user' => $user, 'level' => $level, 'status' => 'create new player '], 200);
+//        $level_up = PlayerMulti::query()->where('player_id', $user->id)->first();
+//        $level = $this->multiple_touchesRepo->getNameCheck($level_up->multiple_touche_id);
+        $user->trophy_many->pluck('amount')->first() ;
+        $user->t_balance->pluck('amount')->first();
+        return response()->json(['user' => $user,  'status' => 'create new player '], 200);
     }
 
     public function syncTaskBeUser($id)

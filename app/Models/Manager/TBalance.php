@@ -22,5 +22,11 @@ class TBalance extends Model
     {
         return $this->belongsTo(User::class, 'player_id');
     }
-
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+        'deleted_at',
+        'player_id',
+        'publish_at',
+    ];
 }

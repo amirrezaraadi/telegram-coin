@@ -21,5 +21,11 @@ class Trophy extends Model
         return $this->belongsTo(User::class, 'player_id');
     }
 
+    protected $hidden = [
+        'pivot',
+        'updated_at',
+        'is_default',
+        'created_at',
+    ];
 
 }
