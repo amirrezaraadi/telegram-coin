@@ -22,7 +22,15 @@ class MultipleTouches extends Model
     protected $casts = [
         'publish_at' => 'timestamp'
     ];
-
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+        'deleted_at',
+        'is_default',
+        'publish_at',
+        'pivot',
+        'laravel_through_key',
+    ];
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class, 'player_id');

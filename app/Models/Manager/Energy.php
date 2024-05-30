@@ -30,6 +30,7 @@ class Energy extends Model
         'created_at' ,
         'updated_at',
         'is_default',
+        'pivot',
     ];
 
     public function user(): BelongsToMany
