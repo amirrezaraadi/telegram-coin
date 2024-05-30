@@ -107,4 +107,9 @@ class userRepo
     {
        return User::query()->where('uuid_name' , $id)->first();
     }
+
+    public function getUserSelectId()
+    {
+        return User::query()->select(['id'])->get();
+    }
 }

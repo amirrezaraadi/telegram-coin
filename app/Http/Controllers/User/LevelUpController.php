@@ -97,7 +97,6 @@ class LevelUpController extends Controller
         return $result;
     }
 
-
     public function robot_up(Request $request)
     {
         $header = $request->header('info-user');
@@ -119,7 +118,7 @@ class LevelUpController extends Controller
         $id = $multiId->multiple_touche_id + 1;
         $result = $this->multiple_touchesRepo->getNameFirst($id);
 
-        if (is_null($result )) {
+        if (is_null($result)) {
             $check = $this->multiple_touchesRepo->getNameCheck($multiId->multiple_touche_id);
             return $check;
         }
@@ -140,7 +139,6 @@ class LevelUpController extends Controller
     }
 
 
-
     public function trophy(Request $request)
     {
         $header = $request->header('info-user');
@@ -154,14 +152,16 @@ class LevelUpController extends Controller
         }
         return $check;
     }
+
     public function trophy_up(Request $request)
     {
         $header = $request->header('info-user');
         $user = $this->userRepo->getIdName($header);
-        $result = $this->trophyRepo->getNameNext($user->getTrophyUserId->id , $user);
+        $result = $this->trophyRepo->getNameNext($user->getTrophyUserId->id, $user);
         if ($result === false) {
             return response()->json(['message' => 'The last step'], 401);
         }
         return $result;
     }
 }
+
